@@ -1,0 +1,154 @@
+@layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #09141f;
+    color: #d8e3f4;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+  
+  #root {
+    min-height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #09141f;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #09141f;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #202b37;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #35c8e8;
+  }
+}
+
+/* Material Symbols alignment */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  vertical-align: middle;
+  user-select: none;
+}
+
+/* Polar animations from Stitch */
+@keyframes jarvisSpinCw {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes jarvisSpinCcw {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.02); }
+}
+
+@keyframes radarSweep {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(1000%); }
+}
+
+@keyframes blinkSlow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+.animate-spin-cw {
+  animation: jarvisSpinCw 40s linear infinite;
+}
+
+.animate-spin-ccw {
+  animation: jarvisSpinCcw 28s linear infinite;
+}
+
+.animate-spin-fast {
+  animation: jarvisSpinCw 12s linear infinite;
+}
+
+.animate-radar-sweep {
+  animation: radarSweep 6s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.animate-blink-slow {
+  animation: blinkSlow 2s ease-in-out infinite;
+}
+
+/* Polar Grids and Canvas Effects */
+.bg-polar-grid {
+  background-image: 
+    linear-gradient(to right, rgba(75, 215, 247, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(75, 215, 247, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.bg-polar-radial {
+  background: radial-gradient(circle at 50% 30%, rgba(53, 200, 232, 0.12) 0%, rgba(9, 20, 31, 0) 70%);
+}
+
+.bg-polar-aurora {
+  background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(116, 226, 255, 0.15), rgba(9, 20, 31, 0));
+}
+
+.polar-card-border {
+  border: 1px solid rgba(134, 147, 151, 0.18);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.polar-card-border:hover {
+  border-color: rgba(116, 226, 255, 0.4);
+  box-shadow: 0 8px 30px rgba(0, 80, 95, 0.25);
+}
+
+.polar-glow-text {
+  text-shadow: 0 0 20px rgba(116, 226, 255, 0.35);
+}
+
+.polar-hud-corner {
+  position: relative;
+}
+
+.polar-hud-corner::before,
+.polar-hud-corner::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-color: #35c8e8;
+  pointer-events: none;
+}

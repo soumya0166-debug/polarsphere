@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-secondary-fixed-variant": "#004a75", "surface-container-highest": "#2b3642", "primary-fixed": "#adecff", "surface-variant": "#2b3642", "on-primary-container": "#00505f", "primary-fixed-dim": "#4bd7f7", "secondary-fixed-dim": "#96ccff", "on-primary-fixed": "#001f26", "tertiary-container": "#95bfc9", "tertiary": "#b0dbe5", "on-tertiary-fixed": "#001f25", "on-surface": "#d8e3f4", "on-secondary-container": "#95cbff", "on-primary": "#003641", "surface-container-high": "#202b37", "on-secondary-fixed": "#001d32", "surface-tint": "#4bd7f7", "surface-container-lowest": "#040f1a", "primary-container": "#35c8e8", "secondary": "#96ccff", "on-background": "#d8e3f4", "inverse-on-surface": "#27313d", "inverse-surface": "#d8e3f4", "inverse-primary": "#00687b", "outline": "#869397", "surface": "#09141f", "surface-bright": "#2f3a47", "surface-container": "#16202c", "on-tertiary": "#04363e", "error": "#ffb4ab", "surface-container-low": "#111c28", "secondary-container": "#005688", "on-error": "#690005", "on-primary-fixed-variant": "#004e5d", "outline-variant": "#3d494d", "primary": "#74e2ff", "surface-dim": "#09141f", "error-container": "#93000a", "background": "#09141f", "on-surface-variant": "#bcc9cd", "on-tertiary-fixed-variant": "#224d55", "on-secondary": "#003353", "secondary-fixed": "#cee5ff", "on-tertiary-container": "#244e57", "on-error-container": "#ffdad6", "tertiary-fixed-dim": "#a3ced7", "tertiary-fixed": "#bfeaf4" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-md": "1rem", "gutter": "1.5rem", "margin-mobile": "1rem", "margin": "2rem", "space-xl": "2.5rem", "space-lg": "1.5rem", "space-sm": "0.5rem", "gutter-sm": "1rem", "margin-desktop": "3rem", "gutter-lg": "2rem", "space-xs": "0.25rem" }, "fontFamily": { "body-md": ["Inter"], "data-mono-md": ["JetBrains Mono"], "headline-lg": ["Space Grotesk"], "data-mono-sm": ["JetBrains Mono"], "label-caps": ["Space Grotesk"], "display-hero": ["Space Grotesk"], "body-sm": ["Inter"], "body-lg": ["Inter"], "headline-sm": ["Space Grotesk"], "headline-lg-mobile": ["Space Grotesk"], "data-mono-lg": ["JetBrains Mono"], "headline-md": ["Space Grotesk"], "display-hero-mobile": ["Space Grotesk"] }, "fontSize": { "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }], "data-mono-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "500" }], "headline-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "500" }], "data-mono-sm": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "400" }], "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.12em", "fontWeight": "600" }], "display-hero": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.03em", "fontWeight": "600" }], "body-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }], "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }], "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "500" }], "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "data-mono-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0.02em", "fontWeight": "500" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "display-hero-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600" }] } } } };</script></head><body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-16 w-full px-gutter-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-gutter-sm"><div class="flex items-center gap-space-sm"><img alt="Brand logo. - Primary color: #35c8e8
+- Font: spaceGrotesk
+- Mode: dark
+- Roundness: rounded-sm
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1V4sMITjXTVdewsx2TEN_ePgvWeHku7uOGP61QAss5beXso64Wx_VEp3bIcfivykWeLnLAH6eNLg0dv5UaTcUrUz_0yASpBW478GInqaeHEhhFfuwbgKcWPoDBdawi5N1AEfhe4WK2gDYttQmilJuRg0ltcvOdT4Tw5nMDhMaLVJGjPAN4j43t-XlCl17TYnFYDnu-sUuPbwJRA5XCHB9Sk7emxPk3P8bxBsdm28grluChy3Sn9BRq7QCeb"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm uppercase tracking-wider text-on-surface font-semibold">POLARSPHERE</span><span class="font-label-caps text-data-mono-sm uppercase text-primary-fixed-dim -mt-1 hidden sm:block">NCPOR // Cryosphere Telemetry</span></div></div><div class="hidden xl:flex items-center gap-space-sm px-space-sm py-space-xs rounded bg-surface-container-high/80 text-on-surface-variant font-data-mono-sm text-data-mono-sm"><span class="inline-flex items-center gap-1.5 text-primary"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span>LIVE TELEMETRY</span><span class="text-outline-variant">|</span><span class="text-tertiary-fixed-dim">70°45′S // 78°55′N</span></div></div><nav class="hidden lg:flex items-center gap-space-md font-headline-sm text-body-sm" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm rounded px-space-sm py-1"><a class="text-on-surface-variant hover:text-on-surface transition-colors py-1 px-space-xs" data-path="home" href="#">Home</a><a class="text-on-surface-variant hover:text-on-surface transition-colors py-1 px-space-xs" data-path="stations-and-outposts" href="#">Stations &amp; Outposts</a><a aria-current="page" class="transition-colors bg-primary-container text-on-primary-container font-headline-sm rounded px-space-sm py-1" data-path="mission-control" href="#">Mission Control</a><a class="text-on-surface-variant hover:text-on-surface transition-colors py-1 px-space-xs" data-path="science-and-discoveries" href="#">Science &amp; Discoveries</a><a class="text-on-surface-variant hover:text-on-surface transition-colors py-1 px-space-xs" data-path="data-explorer" href="#">Data Explorer</a><a class="text-on-surface-variant hover:text-on-surface transition-colors py-1 px-space-xs" data-path="learning-lab" href="#">Learning Lab</a></nav><div class="flex items-center gap-space-sm"><button aria-label="Search telemetry" class="p-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded transition-colors flex items-center justify-center" type="button"><span class="material-symbols-outlined text-[20px]">search</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center cursor-pointer shadow-[0_0_12px_rgba(53,200,232,0.3)]"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-surface min-h-[calc(100vh-64px)]"><div class="flex flex-col w-full">
+<!-- Operational Sub-Telemetry Ribbon -->
+<div class="w-full bg-surface-container-low px-gutter-lg py-space-sm shadow-md">
+<div class="w-full max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex flex-wrap items-center gap-space-lg">
+<div class="flex items-center gap-space-xs font-data-mono-sm text-data-mono-sm">
+<span class="flex h-2.5 w-2.5 rounded-full bg-primary animate-ping"></span>
+<span class="text-primary font-semibold">OPS-GRID CONUS // SOUTHERN &amp; ARCTIC SECTORS</span>
+</div>
+<div class="h-3 w-px bg-outline-variant hidden sm:block"></div>
+<div class="flex items-center gap-space-xs font-data-mono-sm text-data-mono-sm text-on-surface-variant">
+<span>TIME UTC:</span>
+<span class="text-on-surface font-medium" id="utc-clock">11:42:19 ZULU</span>
+</div>
+<div class="h-3 w-px bg-outline-variant hidden md:block"></div>
+<div class="flex items-center gap-space-xs font-data-mono-sm text-data-mono-sm text-tertiary">
+<span class="material-symbols-outlined text-[16px]">satellite_alt</span>
+<span>SAT-LINK: GSAT-7R / IRIDIUM-NEXT MATRIX [LOCK 99.8%]</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="font-label-caps text-label-caps text-on-surface-variant">CRYOSPHERE THREAT LEVEL:</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest text-primary font-data-mono-sm text-data-mono-sm font-semibold">DEFCON-3 CRYO</span>
+<button class="px-space-sm py-1 rounded bg-secondary-container text-on-secondary-container font-headline-sm text-data-mono-sm hover:bg-primary hover:text-on-primary transition-all flex items-center gap-1 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span>EXPO-REPORT (PDF)</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Command Center Telemetry High-Impact Stats Matrix -->
+<section class="w-full px-gutter-lg pt-space-lg pb-space-md">
+<div class="w-full max-w-[1440px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-gutter-sm">
+<!-- Stat 1 -->
+<div class="p-space-md rounded bg-surface-container-high relative overflow-hidden shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-caps text-label-caps uppercase text-primary">Active Expeditions</span>
+<span class="material-symbols-outlined text-primary text-[20px]">explore</span>
+</div>
+<div class="my-space-xs flex items-baseline gap-space-xs">
+<span class="font-display-hero text-display-hero text-on-surface leading-none">03</span>
+<span class="font-data-mono-sm text-data-mono-sm text-tertiary-fixed-dim">DEPLOYMENTS</span>
+</div>
+<div class="flex items-center justify-between font-data-mono-sm text-data-mono-sm text-on-surface-variant">
+<span>Antarctic • Arctic • Himalaya</span>
+<span class="text-primary font-semibold">100% NOMINAL</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"></div>
+</div>
+<!-- Stat 2 -->
+<div class="p-space-md rounded bg-surface-container-high relative overflow-hidden shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-caps text-label-caps uppercase text-secondary">Personnel In Field</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">groups</span>
+</div>
+<div class="my-space-xs flex items-baseline gap-space-xs">
+<span class="font-display-hero text-display-hero text-on-surface leading-none">64</span>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary-fixed">SCIENTISTS</span>
+</div>
+<div class="flex items-center justify-between font-data-mono-sm text-data-mono-sm text-on-surface-variant">
+<span>48 Winter-Over / 16 Cruise</span>
+<span class="text-secondary font-semibold">MED STATUS: GREEN</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-0.5 bg-secondary"></div>
+</div>
+<!-- Stat 3 -->
+<div class="p-space-md rounded bg-surface-container-high relative overflow-hidden shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-caps text-label-caps uppercase text-tertiary">Vessels Underway</span>
+<span class="material-symbols-outlined text-tertiary text-[20px]">directions_boat</span>
+</div>
+<div class="my-space-xs flex items-baseline gap-space-xs">
+<span class="font-display-hero text-display-hero text-on-surface leading-none">02</span>
+<span class="font-data-mono-sm text-data-mono-sm text-tertiary-fixed">ICE-CLASS</span>
+</div>
+<div class="flex items-center justify-between font-data-mono-sm text-data-mono-sm text-on-surface-variant">
+<span>V. Golovnin / Sagar Nidhi</span>
+<span class="text-tertiary font-semibold">TRANSIT TRACKED</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-0.5 bg-tertiary"></div>
+</div>
+<!-- Stat 4 -->
+<div class="p-space-md rounded bg-surface-container-high relative overflow-hidden shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-caps text-label-caps uppercase text-primary-fixed-dim">Telemetry Sync</span>
+<span class="material-symbols-outlined text-primary-fixed-dim text-[20px]">sync</span>
+</div>
+<div class="my-space-xs flex items-baseline gap-space-xs">
+<span class="font-display-hero text-display-hero text-primary font-semibold leading-none">2m</span>
+<span class="font-data-mono-sm text-data-mono-sm text-on-surface-variant">AGO</span>
+</div>
+<div class="flex items-center justify-between font-data-mono-sm text-data-mono-sm text-on-surface-variant">
+<span>Packets: 184,920 Rx/s</span>
+<span class="text-primary font-semibold">0 DROP PACKETS</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-container"></div>
+</div>
+</div>
+</section>
+<!-- Main Hero Mission: ISEA-44 Tactical Dashboard -->
+<section class="w-full px-gutter-lg py-space-md">
+<div class="w-full max-w-[1440px] mx-auto flex flex-col gap-space-md">
+<!-- Section Tag Header -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-space-sm pb-space-xs">
+<div>
+<div class="flex items-center gap-space-sm font-label-caps text-label-caps text-primary tracking-widest uppercase">
+<span class="inline-block w-2 h-2 rounded-full bg-primary"></span>
+            PRIMARY STRATEGIC EXPEDITION DEPLOYMENT
+          </div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mt-1 tracking-tight">44th Indian Scientific Expedition to Antarctica (ISEA-44)</h1>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-space-sm py-1 rounded bg-surface-container-highest text-tertiary-fixed-dim font-data-mono-sm text-data-mono-sm">MOES-NCPOR // EXP-44-ANT</span>
+<span class="px-space-sm py-1 rounded bg-primary text-on-primary font-headline-sm text-data-mono-sm font-semibold tracking-wide">STATUS: TRANSIT PHASE II</span>
+</div>
+</div>
+<!-- Main Visual & Tactical HUD Card -->
+<div class="rounded bg-surface-container-low overflow-hidden shadow-xl grid grid-cols-1 lg:grid-cols-12">
+<!-- Left: Dramatic Polar Calving Scene / Real-time Map View (8 Cols) -->
+<div class="lg:col-span-8 relative min-h-[460px] flex flex-col justify-between p-space-md bg-cover bg-center" data-alt="Expansive panoramic aerial perspective of massive Antarctic tabular ice shelf sheer cliffs fractured with deep crevasses and turquoise sea ice meltwater plumes colliding with the dark stormy navy Southern Ocean. A red and white hull icebreaker research vessel sails along the edge under dramatic towering storm clouds with misty arctic atmospheric fog." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCIQbyAtfkRwZ0XXjq7J504XuBP8NZq5WxZcBITRi08QvekeDmUbqPj_Goyet2XtnGSwyp67ZP9fBzB4oRUbut1XxR3onmdBA_ydrZFHp8RPFEls7wmSSDrtBgar0-K_VvHS4oGQLbuMWTf6c6RXSJ5vrqXIG0-biqIdqheCPkjzl_Ro3qqX5zCQCHTurFW86pnQhT21XYZfasqbUafLMb7_Py9gNeI6GVZVCobXTYgaPe3c9m5DysOyQ');">
+<!-- Ambient Scrim -->
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-surface/80 via-transparent to-transparent"></div>
+<!-- Top HUD Badges -->
+<div class="relative z-10 flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface/90 backdrop-blur-md text-on-surface font-data-mono-sm text-data-mono-sm shadow-md">
+<span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+<span class="text-primary font-semibold">VESSEL:</span>
+<span>MV VASILY GOLOVNIN / CHARTER-IN-44</span>
+</div>
+<div class="flex items-center gap-space-sm px-space-sm py-1 rounded bg-surface/90 backdrop-blur-md text-tertiary-fixed font-data-mono-sm text-data-mono-sm shadow-md">
+<span>LAT: 63°28′14″ S</span>
+<span class="text-outline-variant">|</span>
+<span>LON: 58°42′30″ E</span>
+<span class="text-outline-variant">|</span>
+<span class="text-primary">SPEED: 11.4 KTS</span>
+</div>
+</div>
+<!-- Center Tactical Reticle & Waypoint Projection Graphic -->
+<div class="relative z-10 my-auto py-space-xl flex items-center justify-center pointer-events-none">
+<div class="w-48 h-48 rounded-full bg-primary/5 flex items-center justify-center relative">
+<div class="absolute inset-0 rounded-full animate-spin [animation-duration:16s] border-t-2 border-primary/40"></div>
+<div class="w-36 h-36 rounded-full bg-primary/10 flex items-center justify-center">
+<div class="w-2 h-2 rounded-full bg-primary shadow-[0_0_12px_#35c8e8]"></div>
+</div>
+<span class="absolute -top-3 px-space-xs py-0.5 rounded bg-surface-container font-data-mono-sm text-[10px] text-primary">WAYPOINT 04 // POLAR CONVERGENCE</span>
+<span class="absolute -bottom-3 px-space-xs py-0.5 rounded bg-surface-container font-data-mono-sm text-[10px] text-tertiary">RADAR ECHO: NO ICEBERG HAZARD</span>
+</div>
+</div>
+<!-- Bottom Telemetry Card Bar -->
+<div class="relative z-10 flex flex-wrap items-end justify-between gap-space-md pt-space-md">
+<div class="flex flex-col gap-1 max-w-xl">
+<span class="font-label-caps text-label-caps text-tertiary tracking-wider uppercase">TRANSIT CORRIDOR</span>
+<p class="font-headline-sm text-headline-sm text-on-surface font-medium leading-snug">Southern Ocean Transit towards Prydz Bay &amp; Maitri Air Link Dropzone</p>
+<span class="font-data-mono-sm text-data-mono-sm text-on-surface-variant">Target ETA Larsemann Hills (Bharati Station): 74 hrs (03 March 2025, 08:00 UTC)</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-md py-space-sm rounded bg-primary text-on-primary font-headline-sm text-body-sm font-semibold hover:bg-primary-fixed-dim transition-all shadow-md flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">satellite</span>
+<span>OPEN SENSOR MATRIX</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right: Telemetry & Mission Diagnostics Panel (4 Cols) -->
+<div class="lg:col-span-4 p-space-md flex flex-col justify-between bg-surface-container">
+<div class="flex flex-col gap-space-md">
+<!-- Header -->
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">monitor_heart</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-medium">Telemetry Deck</span>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-high text-primary font-data-mono-sm text-data-mono-sm">SATCOM ACTIVE</span>
+</div>
+<!-- Objectives Mini-List -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Key Mission Objectives</span>
+<div class="flex flex-col gap-space-xs font-body-sm text-body-sm text-on-surface">
+<div class="flex items-start gap-space-xs p-space-xs rounded bg-surface-container-high">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+<span>Deep-sea CTD rosette cast array deployment along 60°S Southern Ocean Transect.</span>
+</div>
+<div class="flex items-start gap-space-xs p-space-xs rounded bg-surface-container-high">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+<span>Amery Ice-shelf Calving Radar Ground-Truth calibration via TerraSAR-X downlink.</span>
+</div>
+<div class="flex items-start gap-space-xs p-space-xs rounded bg-surface-container-high">
+<span class="material-symbols-outlined text-tertiary text-[18px] shrink-0 mt-0.5">pending</span>
+<span>Transfer 48 wintering scientists &amp; 850 metric tonnes aviation/generator fuel to Maitri &amp; Bharati.</span>
+</div>
+</div>
+</div>
+<!-- Fuel & Consumables Gauge -->
+<div class="flex flex-col gap-space-xs p-space-sm rounded bg-surface-container-high">
+<div class="flex justify-between items-center font-data-mono-sm text-data-mono-sm">
+<span class="text-on-surface-variant">VESSEL DIESEL (MGO)</span>
+<span class="text-on-surface font-semibold">82.4% // 1,420 MT</span>
+</div>
+<div class="w-full h-2 rounded bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-primary rounded" style="width: 82.4%"></div>
+</div>
+<div class="flex justify-between items-center font-data-mono-sm text-data-mono-sm mt-space-xs">
+<span class="text-on-surface-variant">FRESHWATER DISTILLATION</span>
+<span class="text-on-surface font-semibold">94.1% // 14.2 T/DAY</span>
+</div>
+<div class="w-full h-2 rounded bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-secondary rounded" style="width: 94.1%"></div>
+</div>
+<div class="flex justify-between items-center font-data-mono-sm text-data-mono-sm mt-space-xs">
+<span class="text-on-surface-variant">JET A-1 STATION RESERVE FUEL</span>
+<span class="text-on-surface font-semibold">100% // SEALED CARGO</span>
+</div>
+<div class="w-full h-2 rounded bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-tertiary rounded" style="width: 100%"></div>
+</div>
+</div>
+<!-- Environmental Telemetry Sensors -->
+<div class="grid grid-cols-2 gap-space-xs font-data-mono-sm text-data-mono-sm">
+<div class="p-space-xs rounded bg-surface-container-high flex flex-col">
+<span class="text-on-surface-variant text-[10px]">SEA SURFACE TEMP</span>
+<span class="text-headline-sm text-primary font-semibold mt-1">-1.4°C</span>
+<span class="text-[10px] text-tertiary">Freezing Margin: 0.4°C</span>
+</div>
+<div class="p-space-xs rounded bg-surface-container-high flex flex-col">
+<span class="text-on-surface-variant text-[10px]">BAROMETRIC PRESS</span>
+<span class="text-headline-sm text-on-surface font-semibold mt-1">978 hPa</span>
+<span class="text-[10px] text-error font-medium">Low Deepening (Gale)</span>
+</div>
+<div class="p-space-xs rounded bg-surface-container-high flex flex-col">
+<span class="text-on-surface-variant text-[10px]">TRUE WIND SPEED</span>
+<span class="text-headline-sm text-secondary font-semibold mt-1">42 KTS</span>
+<span class="text-[10px] text-on-surface-variant">Direction: 210° SW</span>
+</div>
+<div class="p-space-xs rounded bg-surface-container-high flex flex-col">
+<span class="text-on-surface-variant text-[10px]">SIGNIFICANT WAVE HT</span>
+<span class="text-headline-sm text-on-surface font-semibold mt-1">5.8 M</span>
+<span class="text-[10px] text-tertiary-fixed">Swell Period: 11.2s</span>
+</div>
+</div>
+</div>
+<!-- Link Status Footer -->
+<div class="mt-space-md pt-space-xs flex items-center justify-between text-on-surface-variant font-data-mono-sm text-data-mono-sm">
+<span class="flex items-center gap-1">
+<span class="h-2 w-2 rounded-full bg-primary"></span>
+              SATCOM INMARSAT-C
+            </span>
+<span class="text-primary font-semibold">BER: &lt; 10^-8</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Flight / Transit Vector Map & Secondary Operations Section -->
+<section class="w-full px-gutter-lg py-space-md">
+<div class="w-full max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-gutter-md">
+<!-- Real-Time Expedition Waypoint Track Visualizer (7 cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-sm rounded bg-surface-container p-space-md shadow-md">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-caps text-label-caps text-secondary uppercase">Spatial Route Tracker</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Vessel Transit Coordinates &amp; Bathymetry Trace</h2>
+</div>
+<div class="flex items-center gap-space-xs font-data-mono-sm text-data-mono-sm">
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest text-primary">MAP PROJECTION: STEREOGRAPHIC</span>
+</div>
+</div>
+<!-- Bathymetric Profile Chart (SVG) -->
+<div class="w-full h-44 rounded bg-surface-container-low p-space-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex justify-between items-center text-on-surface-variant font-data-mono-sm text-data-mono-sm z-10">
+<span>CAPE TOWN (0 KM)</span>
+<span class="text-primary">SUB-ANTARCTIC FRONT (2,100 KM)</span>
+<span>PRYDZ BAY (4,820 KM)</span>
+</div>
+<svg class="w-full h-24 text-primary" fill="none" preserveaspectratio="none" viewbox="0 0 600 100">
+<!-- Sea Water Fill Gradient -->
+<defs>
+<lineargradient id="oceanGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#35c8e8" stop-opacity="0.25"></stop>
+<stop offset="100%" stop-color="#040f1a" stop-opacity="0.8"></stop>
+</lineargradient>
+</defs>
+<!-- Ocean Floor Bathymetry -->
+<path d="M0,85 Q70,75 140,88 T280,60 T420,70 T520,35 L600,20 L600,100 L0,100 Z" fill="url(#oceanGrad)"></path>
+<path d="M0,85 Q70,75 140,88 T280,60 T420,70 T520,35 L600,20" stroke="#74e2ff" stroke-width="2"></path>
+<!-- Current Ship Marker -->
+<circle class="animate-pulse" cx="360" cy="65" fill="#35c8e8" r="5"></circle>
+<line stroke="#adecff" stroke-dasharray="2 2" stroke-width="1" x1="360" x2="360" y1="0" y2="100"></line>
+<!-- Sounding text -->
+<text fill="#adecff" font-family="JetBrains Mono" font-size="9" x="368" y="45">CURRENT DEPTH: 3,840m</text>
+</svg>
+<div class="flex justify-between items-center font-data-mono-sm text-data-mono-sm text-on-surface-variant z-10">
+<span>Continental Slope: -4,200m</span>
+<span class="text-tertiary">Abyssal Plain Crossing // CTD Station 09 Live</span>
+<span>Larsemann Shelf: -220m</span>
+</div>
+</div>
+<!-- Waypoint Telemetry Log Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left font-data-mono-sm text-data-mono-sm">
+<thead>
+<tr class="text-on-surface-variant bg-surface-container-high/60">
+<th class="py-space-xs px-space-sm font-semibold">WAYPOINT</th>
+<th class="py-space-xs px-space-sm font-semibold">LAT / LONG</th>
+<th class="py-space-xs px-space-sm font-semibold">SPEED</th>
+<th class="py-space-xs px-space-sm font-semibold">SEA ICE CONC.</th>
+<th class="py-space-xs px-space-sm font-semibold">STATUS</th>
+</tr>
+</thead>
+<tbody class="text-on-surface divide-y-0">
+<tr class="bg-surface-container-low/40 hover:bg-surface-container-highest transition-colors">
+<td class="py-space-xs px-space-sm text-primary font-semibold">WP-01 Cape Town Exit</td>
+<td class="py-space-xs px-space-sm">34°21′S 18°28′E</td>
+<td class="py-space-xs px-space-sm">13.2 kts</td>
+<td class="py-space-xs px-space-sm text-on-surface-variant">0 / 10 Open</td>
+<td class="py-space-xs px-space-sm text-tertiary font-semibold">CLEARED</td>
+</tr>
+<tr class="bg-surface-container-low/40 hover:bg-surface-container-highest transition-colors">
+<td class="py-space-xs px-space-sm text-primary font-semibold">WP-02 Roaring Forties</td>
+<td class="py-space-xs px-space-sm">45°10′S 34°12′E</td>
+<td class="py-space-xs px-space-sm">10.8 kts</td>
+<td class="py-space-xs px-space-sm text-on-surface-variant">0 / 10 Open</td>
+<td class="py-space-xs px-space-sm text-tertiary font-semibold">CLEARED</td>
+</tr>
+<tr class="bg-primary-container/20 text-on-surface font-semibold hover:bg-primary-container/30 transition-colors">
+<td class="py-space-xs px-space-sm text-primary flex items-center gap-1">
+<span class="h-1.5 w-1.5 rounded-full bg-primary animate-ping"></span>
+                  WP-03 Convergence Zone
+                </td>
+<td class="py-space-xs px-space-sm text-primary">63°28′S 58°42′E</td>
+<td class="py-space-xs px-space-sm">11.4 kts</td>
+<td class="py-space-xs px-space-sm text-primary">3 / 10 Loose Pack</td>
+<td class="py-space-xs px-space-sm text-primary font-bold">CURRENT POS</td>
+</tr>
+<tr class="bg-surface-container-low/40 hover:bg-surface-container-highest transition-colors">
+<td class="py-space-xs px-space-sm text-on-surface-variant">WP-04 Prydz Bay Shelf</td>
+<td class="py-space-xs px-space-sm text-on-surface-variant">68°50′S 74°20′E</td>
+<td class="py-space-xs px-space-sm text-on-surface-variant">-- kts</td>
+<td class="py-space-xs px-space-sm text-error">7 / 10 Fast Ice</td>
+<td class="py-space-xs px-space-sm text-on-surface-variant">APPROACHING</td>
+</tr>
+<tr class="bg-surface-container-low/40 hover:bg-surface-container-highest transition-colors">
+<td class="py-space-xs px-space-sm text-on-surface-variant">WP-05 Bharati Fast-Ice Anchorage</td>
+<td class="py-space-xs px-space-sm text-on-surface-variant">69°24′S 76°11′E</td>
+<td class="py-space-xs px-space-sm text-on-surface-variant">-- kts</td>
+<td class="py-space-xs px-space-sm text-error">9 / 10 Solid Sheet</td>
+<td class="py-space-xs px-space-sm text-on-surface-variant">TERMINAL DEST</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Secondary Expeditions Roster (5 cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-space-xs">
+<div>
+<span class="font-label-caps text-label-caps text-primary uppercase">Parallel Operations</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Secondary Scientific Expeditions</h2>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-high text-on-surface-variant font-data-mono-sm text-data-mono-sm">2 IN ARCTIC/HIMALAYA</span>
+</div>
+<!-- Expedition 2: Arctic Ny-Ålesund -->
+<div class="rounded bg-surface-container p-space-md flex flex-col gap-space-xs hover:bg-surface-container-high transition-all shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-0.5 rounded bg-secondary-container text-on-secondary-container font-data-mono-sm text-data-mono-sm font-semibold">ARCTIC-2025-W</span>
+<span class="font-data-mono-sm text-data-mono-sm text-tertiary">HIMADRI OBS // SVALBARD</span>
+</div>
+<span class="flex items-center gap-1 font-data-mono-sm text-data-mono-sm text-primary">
+<span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+              SAMPLING LIVE
+            </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-medium mt-1">Ny-Ålesund Marine Biogeochemistry &amp; Kongsfjorden Runoff</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Continuous fjord hydrographic monitoring analyzing glacial melt discharge, dissolved organic carbon, and atmospheric aerosol particulate exchange.</p>
+<div class="grid grid-cols-3 gap-space-xs pt-space-xs font-data-mono-sm text-data-mono-sm">
+<div class="p-space-xs rounded bg-surface-container-low">
+<span class="text-on-surface-variant text-[10px] block">TEAM SIZE</span>
+<span class="text-on-surface font-semibold">08 Scientists</span>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low">
+<span class="text-on-surface-variant text-[10px] block">SURFACE TEMP</span>
+<span class="text-secondary font-semibold">-18.6°C</span>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low">
+<span class="text-on-surface-variant text-[10px] block">ICE COVER</span>
+<span class="text-primary font-semibold">41% Fjord Basin</span>
+</div>
+</div>
+</div>
+<!-- Expedition 3: Himalaya Chhota Shigri -->
+<div class="rounded bg-surface-container p-space-md flex flex-col gap-space-xs hover:bg-surface-container-high transition-all shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-0.5 rounded bg-tertiary-container text-on-tertiary-container font-data-mono-sm text-data-mono-sm font-semibold">HIM-TRAVERSE-IX</span>
+<span class="font-data-mono-sm text-data-mono-sm text-tertiary">HIMANSH // SPITI VALLEY</span>
+</div>
+<span class="flex items-center gap-1 font-data-mono-sm text-data-mono-sm text-primary">
+<span class="h-2 w-2 rounded-full bg-primary"></span>
+              RADAR ACTIVE
+            </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-medium mt-1">Chhota Shigri &amp; Batal Glacier Deep GPR Mass-Balance</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Ground-Penetrating Radar cross-section mapping at 4,800m altitude. Quantifying seasonal ice thinning and permafrost core thermistors.</p>
+<div class="grid grid-cols-3 gap-space-xs pt-space-xs font-data-mono-sm text-data-mono-sm">
+<div class="p-space-xs rounded bg-surface-container-low">
+<span class="text-on-surface-variant text-[10px] block">CREW ACTIVE</span>
+<span class="text-on-surface font-semibold">08 Field Geologists</span>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low">
+<span class="text-on-surface-variant text-[10px] block">ELEVATION</span>
+<span class="text-secondary font-semibold">4,890m AMSL</span>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low">
+<span class="text-on-surface-variant text-[10px] block">ICE THICKNESS</span>
+<span class="text-primary font-semibold">124m Mean Bed</span>
+</div>
+</div>
+</div>
+<!-- Expedition 4: Southern Ocean ORV Sagar Nidhi Cruise -->
+<div class="rounded bg-surface-container p-space-md flex flex-col gap-space-xs hover:bg-surface-container-high transition-all shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-0.5 rounded bg-secondary text-on-secondary font-data-mono-sm text-data-mono-sm font-semibold">SO-CRUISE-14</span>
+<span class="font-data-mono-sm text-data-mono-sm text-tertiary">ORV SAGAR NIDHI</span>
+</div>
+<span class="flex items-center gap-1 font-data-mono-sm text-data-mono-sm text-primary">
+<span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+              UNDERWAY
+            </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-medium mt-1">Southern Ocean Hydrographic &amp; Paleoclimate Core Cruise</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Multi-beam bathymetry and sediment piston coring along the Polar Front. Calibrating deep carbon sequestration models.</p>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-data-mono-sm text-data-mono-sm">
+<span>POS: 54°12′S 42°18′E</span>
+<span class="text-tertiary">STATION 14/22 IN PROGRESS</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Scientific Personnel Roster & Live Safety Dispatch Feed -->
+<section class="w-full px-gutter-lg pt-space-md pb-space-xl">
+<div class="w-full max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-gutter-md">
+<!-- Field Personnel Roster Card (8 cols) -->
+<div class="lg:col-span-8 rounded bg-surface-container p-space-md shadow-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[22px]">badge</span>
+<div>
+<span class="font-label-caps text-label-caps text-primary uppercase">Active Station &amp; Vessel Manifest</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Scientific Leadership &amp; Field Leads</h3>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-xs py-1 rounded bg-surface-container-high text-on-surface-variant font-data-mono-sm text-data-mono-sm hover:text-on-surface" type="button">ISEA-44</button>
+<button class="px-space-xs py-1 rounded bg-surface-container-high text-on-surface-variant font-data-mono-sm text-data-mono-sm hover:text-on-surface" type="button">HIMADRI</button>
+<button class="px-space-xs py-1 rounded bg-surface-container-high text-on-surface-variant font-data-mono-sm text-data-mono-sm hover:text-on-surface" type="button">BHARATI</button>
+</div>
+</div>
+<!-- Roster Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm mt-space-sm">
+<!-- Lead 1 -->
+<div class="p-space-sm rounded bg-surface-container-low flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[28px]">science</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold truncate">Dr. Shailendra Verma</span>
+<span class="font-data-mono-sm text-[10px] px-1 rounded bg-primary/20 text-primary">LEADER</span>
+</div>
+<span class="font-body-sm text-body-sm text-tertiary truncate">Expedition Leader (ISEA-44) // NCPOR</span>
+<span class="font-data-mono-sm text-data-mono-sm text-on-surface-variant mt-0.5">Focus: Glaciology &amp; Ice-Shelf Dynamics</span>
+</div>
+</div>
+<!-- Lead 2 -->
+<div class="p-space-sm rounded bg-surface-container-low flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[28px]">water</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold truncate">Dr. Kavitha Raman</span>
+<span class="font-data-mono-sm text-[10px] px-1 rounded bg-secondary/20 text-secondary">CHIEF SCI</span>
+</div>
+<span class="font-body-sm text-body-sm text-tertiary truncate">Chief Oceanographer // INCOIS</span>
+<span class="font-data-mono-sm text-data-mono-sm text-on-surface-variant mt-0.5">Focus: Southern Ocean Carbon Flux</span>
+</div>
+</div>
+<!-- Lead 3 -->
+<div class="p-space-sm rounded bg-surface-container-low flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary text-[28px]">medical_services</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold truncate">Surg. Cdr. Rajesh Nair</span>
+<span class="font-data-mono-sm text-[10px] px-1 rounded bg-surface-container-highest text-tertiary-fixed">MED-OPS</span>
+</div>
+<span class="font-body-sm text-body-sm text-tertiary truncate">Polar Medicine Officer // Indian Navy</span>
+<span class="font-data-mono-sm text-data-mono-sm text-on-surface-variant mt-0.5">Focus: Hypothermia &amp; Isolation Physiology</span>
+</div>
+</div>
+<!-- Lead 4 -->
+<div class="p-space-sm rounded bg-surface-container-low flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[28px]">precision_manufacturing</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold truncate">Er. Ankit Srivastava</span>
+<span class="font-data-mono-sm text-[10px] px-1 rounded bg-primary/20 text-primary">TECH-LEAD</span>
+</div>
+<span class="font-body-sm text-body-sm text-tertiary truncate">Station Engineer (Bharati Winter-Over)</span>
+<span class="font-data-mono-sm text-data-mono-sm text-on-surface-variant mt-0.5">Focus: Micro-grid &amp; Cryo-power Systems</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Metric -->
+<div class="mt-space-md pt-space-xs flex flex-wrap items-center justify-between gap-space-sm font-data-mono-sm text-data-mono-sm text-on-surface-variant">
+<span>ALL 64 RESEARCHERS EQUIPPED WITH IRIDIUM PERSONAL BEACONS</span>
+<span class="text-primary">ALL CHANNELS ACTIVE // LAST CHECKIN: 4m AGO</span>
+</div>
+</div>
+<!-- Real-Time Mission Dispatch & Field Log Stream (4 cols) -->
+<div class="lg:col-span-4 rounded bg-surface-container p-space-md shadow-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-space-xs mb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">rss_feed</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Dispatch Stream</h3>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-high text-primary font-data-mono-sm text-data-mono-sm animate-pulse">LIVE FEED</span>
+</div>
+<!-- Log items -->
+<div class="flex flex-col gap-space-sm mt-space-xs font-data-mono-sm text-data-mono-sm">
+<div class="flex flex-col gap-1 p-space-xs rounded bg-surface-container-low">
+<div class="flex items-center justify-between">
+<span class="text-primary font-semibold">11:38:02 UTC // ISEA-44</span>
+<span class="text-[10px] text-on-surface-variant">VASILY GOLOVNIN</span>
+</div>
+<p class="text-on-surface font-body-sm text-body-sm">Deep rosette cast at CTD Station 08 completed. Water samples collected at 3,200m depth; salinity profiles synched to NCPOR cloud.</p>
+</div>
+<div class="flex flex-col gap-1 p-space-xs rounded bg-surface-container-low">
+<div class="flex items-center justify-between">
+<span class="text-secondary font-semibold">10:55:14 UTC // HIMADRI</span>
+<span class="text-[10px] text-on-surface-variant">NY-ÅLESUND</span>
+</div>
+<p class="text-on-surface font-body-sm text-body-sm">Wind gust recorded 52 knots. Field party at Marine Laboratory secured. Automated spectrometer logged aerosol burst over Kings Bay.</p>
+</div>
+<div class="flex flex-col gap-1 p-space-xs rounded bg-surface-container-low">
+<div class="flex items-center justify-between">
+<span class="text-tertiary font-semibold">09:12:40 UTC // HIMANSH</span>
+<span class="text-[10px] text-on-surface-variant">SPITI BASIN</span>
+</div>
+<p class="text-on-surface font-body-sm text-body-sm">Traverse party safely reached Batal High Ridge. 400MHz GPR profile 06 run over lateral moraine initiated. Snow pit depth: 185cm.</p>
+</div>
+<div class="flex flex-col gap-1 p-space-xs rounded bg-surface-container-low">
+<div class="flex items-center justify-between">
+<span class="text-primary-fixed-dim font-semibold">08:04:19 UTC // BHARATI</span>
+<span class="text-[10px] text-on-surface-variant">LARSEMANN</span>
+</div>
+<p class="text-on-surface font-body-sm text-body-sm">Helipad landing strip cleared of drift snow. Fuel transfer lines preheated for upcoming Vasily Golovnin cargo offloading operations.</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-space-md py-space-xs rounded bg-surface-container-highest text-on-surface font-headline-sm text-body-sm hover:bg-surface-container-high transition-colors text-center" type="button">
+          VIEW COMPLETE HISTORICAL LOG ARCHIVE
+        </button>
+</div>
+</div>
+</section>
+<!-- Interactive Client-side Script for Real-time Clock -->
+<script>
+    function updateClock() {
+      const clockEl = document.getElementById('utc-clock');
+      if (!clockEl) return;
+      const now = new Date();
+      const h = String(now.getUTCHours()).padStart(2, '0');
+      const m = String(now.getUTCMinutes()).padStart(2, '0');
+      const s = String(now.getUTCSeconds()).padStart(2, '0');
+      clockEl.textContent = `${h}:${m}:${s} ZULU`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest text-on-surface-variant"><div class="w-full px-gutter-lg py-margin-desktop"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter-lg mb-margin"><div class="flex flex-col gap-space-sm"><div class="flex items-center gap-space-sm"><img alt="Brand logo. - Primary color: #35c8e8
+- Font: spaceGrotesk
+- Mode: dark
+- Roundness: rounded-sm
+" class="h-6 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1V4sMITjXTVdewsx2TEN_ePgvWeHku7uOGP61QAss5beXso64Wx_VEp3bIcfivykWeLnLAH6eNLg0dv5UaTcUrUz_0yASpBW478GInqaeHEhhFfuwbgKcWPoDBdawi5N1AEfhe4WK2gDYttQmilJuRg0ltcvOdT4Tw5nMDhMaLVJGjPAN4j43t-XlCl17TYnFYDnu-sUuPbwJRA5XCHB9Sk7emxPk3P8bxBsdm28grluChy3Sn9BRq7QCeb"/><span class="font-headline-sm text-headline-sm uppercase tracking-wider text-on-surface font-semibold">POLARSPHERE</span></div><p class="font-body-sm text-body-sm text-on-surface-variant">India's sovereign polar and oceanic scientific research mission network. Continuous cryosphere, oceanic, and atmospheric observational infrastructure.</p><div class="mt-space-xs font-label-caps text-data-mono-sm text-tertiary-fixed">NCPOR • Ministry of Earth Sciences (MoES)</div></div><div class="flex flex-col gap-space-xs"><span class="font-label-caps text-label-caps text-primary uppercase tracking-widest mb-space-xs">Active Observatories</span><div class="flex flex-col gap-1 font-data-mono-sm text-data-mono-sm"><div class="flex justify-between items-center py-0.5"><span class="text-on-surface">MAITRI (Antarctica)</span><span class="text-tertiary">70°45′57″S 11°44′09″E</span></div><div class="flex justify-between items-center py-0.5"><span class="text-on-surface">BHARATI (Antarctica)</span><span class="text-tertiary">69°24′28″S 76°11′14″E</span></div><div class="flex justify-between items-center py-0.5"><span class="text-on-surface">HIMADRI (Arctic - Ny-Ålesund)</span><span class="text-tertiary">78°55′N 11°56′E</span></div><div class="flex justify-between items-center py-0.5"><span class="text-on-surface">HIMANSH (Himalayas - Spiti)</span><span class="text-tertiary">32°24′N 77°37′E</span></div></div></div><div class="flex flex-col gap-space-xs"><span class="font-label-caps text-label-caps text-primary uppercase tracking-widest mb-space-xs">Exploration Network</span><ul class="flex flex-col gap-1 font-body-sm text-body-sm"><li><a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Expedition Logbooks &amp; Logs</a></li><li><a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Cryosphere Ice-Core Repository</a></li><li><a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Atmospheric &amp; Magnetosphere Radar</a></li><li><a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">NCPOR Open Data Portal</a></li><li><a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Young Scientist Polar Fellowship</a></li></ul></div><div class="flex flex-col gap-space-xs"><span class="font-label-caps text-label-caps text-primary uppercase tracking-widest mb-space-xs">Institutional Credits</span><div class="font-body-sm text-body-sm text-on-surface-variant flex flex-col gap-space-xs"><p>National Centre for Polar and Ocean Research (NCPOR), Headland Sada, Vasco-da-Gama, Goa 403804, India.</p><p class="font-data-mono-sm text-data-mono-sm text-tertiary">NODE: IN-NCPOR-G1 // SEC-09</p></div></div></div><div class="pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm text-on-surface-variant font-data-mono-sm text-data-mono-sm bg-surface-container-low/40 px-space-md py-space-sm rounded"><div class="flex items-center gap-space-sm"><span>© 2025 NCPOR, Ministry of Earth Sciences, Govt. of India. All rights reserved.</span></div><div class="flex items-center gap-space-md"><a class="hover:text-on-surface transition-colors" href="#">Security &amp; Data Protocols</a><span class="text-outline-variant">•</span><a class="hover:text-on-surface transition-colors" href="#">Telemetry API</a><span class="text-outline-variant">•</span><a class="hover:text-on-surface transition-colors" href="#">System Status</a></div></div></div></footer></body></html>

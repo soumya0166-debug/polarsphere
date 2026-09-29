@@ -1,0 +1,134 @@
+<!doctype html>
+<html class="dark" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="PolarSphere — India's Polar Observation Suite, connecting Maitri, Bharati, Himadri, and Himansh across Antarctica, Arctic, Southern Ocean, and Himalaya." />
+    <title>POLARSPHERE — The Polar World, Through India's Eyes</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    
+    <!-- Tailwind CSS with Stitch Design DNA -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-low": "#111c28",
+              "primary-container": "#35c8e8",
+              "inverse-primary": "#00687b",
+              "outline": "#869397",
+              "tertiary": "#b0dbe5",
+              "surface": "#09141f",
+              "on-tertiary-container": "#244e57",
+              "surface-container-highest": "#2b3642",
+              "inverse-on-surface": "#27313d",
+              "on-background": "#d8e3f4",
+              "surface-bright": "#2f3a47",
+              "on-tertiary": "#04363e",
+              "primary-fixed": "#adecff",
+              "surface-tint": "#4bd7f7",
+              "primary-fixed-dim": "#4bd7f7",
+              "secondary-fixed": "#cee5ff",
+              "on-secondary-container": "#95cbff",
+              "secondary-fixed-dim": "#96ccff",
+              "on-tertiary-fixed": "#001f25",
+              "surface-container-high": "#202b37",
+              "surface-container": "#16202c",
+              "tertiary-fixed": "#bfeaf4",
+              "on-error": "#690005",
+              "on-primary-fixed": "#001f26",
+              "on-secondary-fixed": "#001d32",
+              "surface-variant": "#2b3642",
+              "on-secondary": "#003353",
+              "tertiary-fixed-dim": "#a3ced7",
+              "tertiary-container": "#95bfc9",
+              "inverse-surface": "#d8e3f4",
+              "error-container": "#93000a",
+              "error": "#ffb4ab",
+              "on-primary": "#003641",
+              "outline-variant": "#3d494d",
+              "secondary": "#96ccff",
+              "secondary-container": "#005688",
+              "on-tertiary-fixed-variant": "#224d55",
+              "on-primary-fixed-variant": "#004e5d",
+              "background": "#09141f",
+              "on-secondary-fixed-variant": "#004a75",
+              "on-surface-variant": "#bcc9cd",
+              "on-error-container": "#ffdad6",
+              "primary": "#74e2ff",
+              "on-surface": "#d8e3f4",
+              "surface-dim": "#09141f",
+              "on-primary-container": "#00505f",
+              "surface-container-lowest": "#040f1a"
+            },
+            borderRadius: {
+              "DEFAULT": "0.125rem",
+              "lg": "0.25rem",
+              "xl": "0.5rem",
+              "full": "0.75rem"
+            },
+            spacing: {
+              "space-xs": "0.25rem",
+              "space-sm": "0.5rem",
+              "space-md": "1rem",
+              "space-lg": "1.5rem",
+              "space-xl": "2.5rem",
+              "gutter-sm": "1rem",
+              "gutter": "1.5rem",
+              "gutter-lg": "2rem",
+              "margin-mobile": "1rem",
+              "margin": "2rem",
+              "margin-desktop": "3rem"
+            },
+            fontFamily: {
+              "display-hero-mobile": ["Space Grotesk", "sans-serif"],
+              "label-caps": ["Space Grotesk", "sans-serif"],
+              "body-sm": ["Inter", "sans-serif"],
+              "headline-lg": ["Space Grotesk", "sans-serif"],
+              "data-mono-sm": ["JetBrains Mono", "monospace"],
+              "headline-sm": ["Space Grotesk", "sans-serif"],
+              "display-hero": ["Space Grotesk", "sans-serif"],
+              "data-mono-lg": ["JetBrains Mono", "monospace"],
+              "headline-md": ["Space Grotesk", "sans-serif"],
+              "body-lg": ["Inter", "sans-serif"],
+              "data-mono-md": ["JetBrains Mono", "monospace"],
+              "headline-lg-mobile": ["Space Grotesk", "sans-serif"],
+              "body-md": ["Inter", "sans-serif"],
+              "sans": ["Inter", "sans-serif"],
+              "mono": ["JetBrains Mono", "monospace"]
+            },
+            fontSize: {
+              "display-hero-mobile": ["36px", { lineHeight: "44px", letterSpacing: "-0.02em", fontWeight: "600" }],
+              "label-caps": ["11px", { lineHeight: "16px", letterSpacing: "0.12em", fontWeight: "600" }],
+              "body-sm": ["13px", { lineHeight: "20px", fontWeight: "400" }],
+              "headline-lg": ["36px", { lineHeight: "44px", letterSpacing: "-0.02em", fontWeight: "500" }],
+              "data-mono-sm": ["11px", { lineHeight: "16px", letterSpacing: "0.06em", fontWeight: "400" }],
+              "headline-sm": ["20px", { lineHeight: "28px", letterSpacing: "0em", fontWeight: "500" }],
+              "display-hero": ["56px", { lineHeight: "64px", letterSpacing: "-0.03em", fontWeight: "600" }],
+              "data-mono-lg": ["16px", { lineHeight: "24px", letterSpacing: "0.02em", fontWeight: "500" }],
+              "headline-md": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "500" }],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "data-mono-md": ["13px", { lineHeight: "18px", letterSpacing: "0.04em", fontWeight: "500" }],
+              "headline-lg-mobile": ["28px", { lineHeight: "36px", letterSpacing: "-0.01em", fontWeight: "500" }],
+              "body-md": ["15px", { lineHeight: "24px", fontWeight: "400" }]
+            }
+          }
+        }
+      };
+    </script>
+  </head>
+  <body class="bg-background text-on-surface antialiased selection:bg-primary/20 selection:text-primary">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

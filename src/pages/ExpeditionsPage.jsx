@@ -1,11 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ACTIVE_EXPEDITIONS, FIELD_DISPATCHES } from '../data/expeditionsData';
+import { expeditionsService } from '../services/api/expeditionsService';
 
 export default function ExpeditionsPage({ onNavigate }) {
   const [selectedExpeditionId, setSelectedExpeditionId] = useState('isea-44');
   const [dispatchFilter, setDispatchFilter] = useState('ALL');
+  const [linkedDatasets, setLinkedDatasets] = useState([]);
+  const [linkedMedia, setLinkedMedia] = useState([]);
 
   const expedition = ACTIVE_EXPEDITIONS.find(e => e.id === selectedExpeditionId) || ACTIVE_EXPEDITIONS[0];
+
+  useEffect(() => {
+    let isMounted = true;
+    async function loadLinkedAssets() {
+      try {
+        const [ds, md] = await Promise.all([
+          expeditionsService.getExpeditionDatasets(selectedExpeditionId),
+          expeditionsService.getExpeditionMedia(selectedExpeditionId)
+        ]);
+        if (isMounted) {
+          setLinkedDatasets(ds || []);
+          setLinkedMedia(md || []);
+        }
+      } catch (err) {
+        console.error('Error fetching linked expedition assets:', err);
+      }
+    }
+    loadLinkedAssets();
+    return () => { isMounted = false; };
+  }, [selectedExpeditionId]);
 
   const filteredDispatches = FIELD_DISPATCHES.filter(d => 
     (selectedExpeditionId === 'isea-44' || d.expeditionId === selectedExpeditionId) &&
@@ -231,6 +254,84 @@ export default function ExpeditionsPage({ onNavigate }) {
           </div>
         </div>
       </div>
+
+      {/* Linked Scientific Datasets & Field Media (Polar Knowledge Graph) */}
+      {(linkedDatasets.length > 0 || linkedMedia.length > 0) && (
+        <section className="rounded-2xl bg-surface-container-low border border-outline-variant/30 p-6 sm:p-8 space-y-6 shadow-xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-outline-variant/30 pb-4">
+            <div>
+              <div className="flex items-center gap-2 text-xs font-mono text-primary font-semibold uppercase tracking-wider">
+                <span className="material-symbols-outlined !text-base">hub</span>
+                <span>POLAR KNOWLEDGE GRAPH // LINKED DELIVERABLES</span>
+              </div>
+              <h3 className="font-['Space_Grotesk'] text-xl sm:text-2xl font-bold text-on-surface uppercase mt-1">
+                Expedition Datasets & Visual Archives
+              </h3>
+            </div>
+            <span className="text-xs font-mono text-outline">
+              {linkedDatasets.length} DATASETS • {linkedMedia.length} MEDIA
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Linked Datasets */}
+            {linkedDatasets.map(item => (
+              <div 
+                key={item.dataset?.dataset_id || item.id}
+                onClick={() => onNavigate && onNavigate('data', item.dataset?.dataset_id)}
+                className="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant/20 hover:border-primary/50 cursor-pointer transition-all space-y-2 group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono text-primary font-bold uppercase px-2 py-0.5 rounded bg-primary/10 border border-primary/20">
+                    {item.dataset?.data_format || 'DATASET'}
+                  </span>
+                  <span className="text-[10px] font-mono text-outline">{item.collection_station_or_transect}</span>
+                </div>
+                <h4 className="font-['Space_Grotesk'] text-sm font-bold text-on-surface group-hover:text-primary transition-colors">
+                  {item.dataset?.title}
+                </h4>
+                <p className="text-xs text-on-surface-variant line-clamp-2">{item.dataset?.description}</p>
+                <div className="text-[11px] font-mono text-primary flex items-center justify-between pt-1">
+                  <span>DOI: {item.dataset?.doi}</span>
+                  <span className="flex items-center gap-1">EXPLORE DATA <span className="material-symbols-outlined !text-xs">arrow_forward</span></span>
+                </div>
+              </div>
+            ))}
+
+            {/* Linked Media */}
+            {linkedMedia.map(item => (
+              <div 
+                key={item.media?.media_id || item.id}
+                className="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant/20 space-y-2"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono text-rose-400 font-bold uppercase px-2 py-0.5 rounded bg-rose-500/10 border border-rose-500/20">
+                    {item.media?.type || 'MEDIA'}
+                  </span>
+                  <span className="text-[10px] font-mono text-outline">{item.caption}</span>
+                </div>
+                <h4 className="font-['Space_Grotesk'] text-sm font-bold text-on-surface">
+                  {item.media?.title}
+                </h4>
+                <p className="text-xs text-on-surface-variant line-clamp-2">{item.media?.description}</p>
+                {item.media?.media_url && (
+                  <div className="pt-1">
+                    <a 
+                      href={item.media.media_url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-xs font-mono text-primary hover:underline flex items-center gap-1"
+                    >
+                      <span className="material-symbols-outlined !text-sm">open_in_new</span>
+                      <span>View High-Res {item.media.type} ({item.media.dimensions_or_duration})</span>
+                    </a>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Field Dispatch Stream (From Stitch Design) */}
       <section className="space-y-6">

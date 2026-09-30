@@ -3,6 +3,8 @@
 // Note: When no external LLM API key is provided, this service returns validated
 // institutional reference responses based on NCPOR scientific literature.
 
+import { searchService } from './api/searchService.js';
+
 const SCIENTIFIC_KNOWLEDGE_BASE = [
   {
     keywords: ['role', 'climate', 'antarctica', 'why antarctica'],
@@ -124,6 +126,25 @@ export async function askPolarGuide(userQuery) {
       isMock: true,
       serviceProvider: 'PolarSphere NCPOR Scientific Knowledge Engine (Staged for AI Integration)'
     };
+  }
+
+  // Dynamic Knowledge Graph Entity Search
+  try {
+    const searchRes = searchService.search(userQuery, { limit: 5 });
+    if (searchRes && searchRes.totalResults > 0) {
+      const topResults = searchRes.results.slice(0, 3);
+      const summaryItems = topResults.map(r => `• **${r.title}** (${r.resourceType.toUpperCase()}): ${r.shortDescription}`).join('\n\n');
+      return {
+        status: 'success',
+        answer: `Identified **${searchRes.totalResults} verified scientific records** in the Polar Knowledge Graph matching "${userQuery}":\n\n${summaryItems}\n\nYou can explore these records in detail via the **Data Explorer** or **Expedition** portals.`,
+        category: 'Polar Knowledge Graph Query',
+        references: topResults.map(r => `NCPOR Archive: ${r.provenance?.sourceSystem || 'NPDC'} [ID: ${r.id}]`),
+        isMock: true,
+        serviceProvider: 'PolarSphere Knowledge Graph Entity Resolver'
+      };
+    }
+  } catch (e) {
+    console.warn('Knowledge Graph query fallback error:', e);
   }
 
   // Fallback intelligent scientific response

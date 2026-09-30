@@ -1,256 +1,372 @@
-import React from 'react';
+import React, { useState } from 'react';
 import InteractiveGeosphere from '../components/InteractiveGeosphere';
 import { STATIONS } from '../data/stationsData';
 import { ACTIVE_EXPEDITIONS } from '../data/expeditionsData';
-import { POLAR_DATASETS } from '../data/datasetsData';
 
 export default function HomePage({ onNavigate, onOpenGuide }) {
-  const featuredExpedition = ACTIVE_EXPEDITIONS.find(e => e.id === 'isea-44') || ACTIVE_EXPEDITIONS[0];
+  const [selectedJurisdiction, setSelectedJurisdiction] = useState(null);
+
+  const jurisdictions = [
+    {
+      id: 'antarctica',
+      title: 'Antarctica',
+      subtitle: 'Continental Ice Sheet & Sub-Zero Laboratories',
+      coordinates: '70°45′S // 14,000,000 km²',
+      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCIQbyAtfkRwZ0XXjq7J504XuBP8NZq5WxZcBITRi08QvekeDmUbqPj_Goyet2XtnGSwyp67ZP9fBzB4oRUbut1XxR3onmdBA_ydrZFHp8RPFEls7wmSSDrtBgar0-K_VvHS4oGQLbuMWTf6c6RXSJ5vrqXIG0-biqIdqheCPkjzl_Ro3qqX5zCQCHTurFW86pnQhT21XYZfasqbUafLMb7_Py9gNeI6GVZVCobXTYgaPe3c9m5DysOyQ',
+      description: "India's permanent scientific presence in East Antarctica spans the Larsemann Hills and Schirmacher Oasis. Hosting Bharati and Maitri stations for deep ice core drilling, magnetospheric dynamics, and microbial ecology.",
+      metrics: [
+        { label: 'Stations', value: '02 Permanent' },
+        { label: 'Personnel', value: '48 Wintering' },
+        { label: 'Temp Range', value: '-89°C to -12°C' },
+      ],
+      badge: 'JURISDICTION 01',
+      stationId: 'bharati',
+    },
+    {
+      id: 'arctic',
+      title: 'Arctic Realm',
+      subtitle: 'Svalbard High-Latitude Marine Laboratory',
+      coordinates: '78°55′N // Kongsfjorden Fjord',
+      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAK_sPFPQXSGhwpXdoceluCk2wRpC50uUvDDHDvLI5P0tNkimifL-POjqBkwT4Gs4LLcW2UlGmazOrtEprL1yfKNAb07lxXb4XFuGG_tzXlMyf3lx1vnHhYsHBHEnoDxp6fnNgMPN3A3deCbKzN4-IYjX70tbRX25L6kjjRXY2Cw2vOF9ctQ3DYz7xMj6fu4tRFTBFh138SoexMNvfry68eybqgLDQ0hp4yUFUnzpbtBZSpGhqZHNm6tA',
+      description: "At Ny-Ålesund, Svalbard, Himadri base enables continuous atmospheric physics, glacial runoff biogeochemistry, and teleconnection research linking Arctic amplification to Indian Summer Monsoon anomalies.",
+      metrics: [
+        { label: 'Stations', value: '01 International' },
+        { label: 'Fjord Mooring', value: 'IndARC Array' },
+        { label: 'Aerosol Obs', value: '24/7 Continuous' },
+      ],
+      badge: 'JURISDICTION 02',
+      stationId: 'himadri',
+    },
+    {
+      id: 'southern-ocean',
+      title: 'Southern Ocean',
+      subtitle: 'Hydrodynamic Vessel Transects & Carbon Sink',
+      coordinates: '40°S – 70°S // Polar Convergence',
+      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCa_ejpjPbo9oQR_pqtwTkmbBKgMsP4LiP91D_rMvSB_KvoSr7lIUqoMDEWdWjMVkqMSZJpICPNcH3nivO_dO9I38oaWZY_2LfybfFaRLC46AAOLfQJXWjoIOoU9tE9DzF_s_G4yl8vrdSfsGagjOAVAcMglvP82n1mEIovblh1ZpdY4Dad-4QesHjGm9vgCioBMhs7tTTU7Pmiz7xZQXMWdzASexorMEcF5WNT9r57pHdSUva5ylXC1Q',
+      description: "Traversing the Roaring Forties, Furious Fifties, and Screaming Sixties. ORV Sagar Nidhi and chartered icebreakers map the circumpolar current, Southern Ocean carbon sequestration, and Antarctic fast ice.",
+      metrics: [
+        { label: 'Vessels', value: '02 Underway' },
+        { label: 'CTD Stations', value: '22 Planned' },
+        { label: 'Depth Sounding', value: '4,800m Max' },
+      ],
+      badge: 'JURISDICTION 03',
+      stationId: null,
+    },
+    {
+      id: 'himalaya',
+      title: 'Himalayan Third Pole',
+      subtitle: 'High-Altitude Cryosphere & Water Security',
+      coordinates: '32°24′N // 4,080m Elevation',
+      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCzmH0EIu7w7OXYducsygwPpO_NevFVY0-X9gPpUcyTou-PQt968TT8AnQxXUmpf03GHFYnXQ6XO-MKiVOFZHIwgPvFRUo5BVS1PoUkBJA2UnfjrF6Qom0fkZBNHnzscgYUUZ29eeHouWme-1HRes4Z-jE-p9XNKwwnqABHIdc7wLzm1hGuTTUOZuzvV45uUACef-tW_ayXUZ2X-ngpAXEYAhFCH1YTn00dpWBG9NOme-d_TejFp7E7Ww',
+      description: "Himansh station in the Chandra Basin of Himachal Pradesh monitors glacial mass balance for Chhota Shigri, Samudra Tapu, and Batal glaciers—quantifying seasonal melt dynamics that sustain downstream river basins.",
+      metrics: [
+        { label: 'Station', value: 'Himansh Outpost' },
+        { label: 'Altitude', value: '4,080m AMSL' },
+        { label: 'Glaciers', value: '6 Instrumented' },
+      ],
+      badge: 'JURISDICTION 04',
+      stationId: 'himansh',
+    },
+  ];
+
+  const expeditionLog = [
+    {
+      id: 'isea-44',
+      name: '44th Indian Scientific Expedition to Antarctica (ISEA-44)',
+      vessel: 'MV Vasily Golovnin',
+      region: 'Antarctica (Larsemann & Schirmacher)',
+      leader: 'Dr. Shailendra Verma (NCPOR)',
+      status: 'TRANSIT PHASE II',
+      statusColor: 'text-primary',
+      badgeColor: 'bg-primary/10 border-primary/30',
+      active: true,
+      coordinates: '63°28′S, 58°42′E',
+      days: '74 hrs to ETA',
+    },
+    {
+      id: 'arc-2025-w',
+      name: 'Arctic Winter Campaign 2024-2025',
+      vessel: 'Himadri Polar Base (Ny-Ålesund)',
+      region: 'Arctic Svalbard (78°55′N)',
+      leader: 'Dr. Kavitha Raman (INCOIS / NCPOR)',
+      status: 'SAMPLING LIVE',
+      statusColor: 'text-emerald-400',
+      badgeColor: 'bg-emerald-500/10 border-emerald-500/30',
+      active: true,
+      coordinates: '78°55′N, 11°56′E',
+      days: 'Continuous Winter',
+    },
+    {
+      id: 'so-cruise-14',
+      name: 'Southern Ocean Hydrographic & Paleoclimate Cruise 14',
+      vessel: 'ORV Sagar Nidhi',
+      region: 'Southern Ocean (Polar Front)',
+      leader: 'Dr. A. Sengupta (NIO / MoES)',
+      status: 'UNDERWAY (STN 14/22)',
+      statusColor: 'text-secondary',
+      badgeColor: 'bg-secondary/10 border-secondary/30',
+      active: true,
+      coordinates: '54°12′S, 42°18′E',
+      days: 'Day 26 of 45',
+    },
+    {
+      id: 'him-traverse-ix',
+      name: 'Himalayan Cryosphere Traverse IX',
+      vessel: 'Himansh Observatory Camp',
+      region: 'Western Himalaya (Spiti Valley)',
+      leader: 'Er. Ankit Srivastava (NCPOR)',
+      status: 'RADAR ACTIVE',
+      statusColor: 'text-tertiary-fixed',
+      badgeColor: 'bg-tertiary/10 border-tertiary/30',
+      active: true,
+      coordinates: '32°24′N, 77°37′E',
+      days: '4,890m Altitude',
+    },
+    {
+      id: 'isea-43',
+      name: '43rd Indian Scientific Expedition to Antarctica (ISEA-43)',
+      vessel: 'MV Vasily Golovnin / Air Link',
+      region: 'Antarctica (Maitri & Bharati)',
+      leader: 'Dr. R. K. Singh (NCPOR)',
+      status: 'COMPLETED & ARCHIVED',
+      statusColor: 'text-on-surface-variant',
+      badgeColor: 'bg-surface-container-high border-outline-variant/30',
+      active: false,
+      coordinates: '69°24′S, 76°11′E',
+      days: '14,800 nm Logged',
+    },
+  ];
 
   return (
-    <div className="space-y-16 lg:space-y-24 pb-20">
-      {/* Hero Section */}
-      <section className="relative pt-12 sm:pt-20 pb-8 overflow-hidden bg-polar-aurora">
-        {/* Subtle background glow & grid lines */}
-        <div className="absolute inset-0 bg-polar-grid pointer-events-none opacity-40"></div>
+    <div className="w-full bg-surface text-on-surface">
+      {/* ==============================================================
+          SECTION 1: MONUMENTAL CINEMATIC HERO
+          ============================================================== */}
+      <section className="relative w-full min-h-[92vh] flex flex-col justify-between overflow-hidden pt-12 pb-16 px-4 sm:px-6 lg:px-12 bg-surface-container-lowest">
+        {/* Background Atmospheric Canvas with Polar Sea-Ice Texture */}
+        <div 
+          className="absolute inset-0 z-0 bg-cover bg-center opacity-70 scale-105 transition-transform duration-1000 ease-out"
+          style={{
+            backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuA3asl-gPcTW4ZwmI3BNQUWQw5sMLiEIYS3atd3am-xY_Xv-RXXLfCVz5CJTwdsQQBzEAF7oqQGHmm2Rrm0Jl1_kZ-Ug_0yXF5Sk_IkVP-Zfxj07u9KE3KUaQSaWtGfHW5b9Tdy573wneul7cFLOIDn2ao_vRY9Eh9Ab-HAyrm0JFQ5y4etwFbcgRIOpbMlBMvdL0_nzvML7DCqpLmT5NHfcK8GydTFr2oA9AtpJrL3gSVfvLZ7YDoi6w')"
+          }}
+        />
+        <div className="absolute inset-0 z-0 bg-gradient-to-t from-surface via-surface/75 to-surface-container-lowest/80 mix-blend-multiply" />
+        <div className="absolute inset-0 z-0 bg-radial-at-c from-transparent via-surface/40 to-surface" />
+        <div 
+          className="absolute inset-0 opacity-15 pointer-events-none" 
+          style={{ 
+            backgroundImage: 'linear-gradient(to right, #35c8e8 1px, transparent 1px), linear-gradient(to bottom, #35c8e8 1px, transparent 1px)', 
+            backgroundSize: '80px 80px' 
+          }}
+        />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-3xl space-y-6">
-            {/* Mission Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container border border-primary/30 text-xs font-mono text-primary shadow-sm shadow-primary/10">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-              <span className="font-semibold">MINISTRY OF EARTH SCIENCES // NCPOR REPOSITORY</span>
+        <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col justify-between flex-grow">
+          {/* Top Identifier Ribbon */}
+          <div className="flex flex-wrap items-center justify-between gap-4 pt-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-high/80 border border-primary/30 backdrop-blur-md shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              <span className="font-['Space_Grotesk'] text-[11px] font-semibold tracking-widest text-primary uppercase">
+                NATIONAL POLAR INITIATIVE // NCPOR • MOES • GOI
+              </span>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="font-['Space_Grotesk'] text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-on-surface leading-[1.1] uppercase">
-              The Polar World, <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-fixed to-secondary">
-                Through India’s Eyes
-              </span>
-            </h1>
+            <div className="hidden sm:flex items-center gap-4 text-xs font-mono text-on-surface-variant bg-surface-container-lowest/70 backdrop-blur-md px-4 py-1.5 rounded-full border border-outline-variant/30">
+              <span>ANTARCTIC MERIDIAN: <strong className="text-tertiary">70°45′S</strong></span>
+              <span className="text-outline-variant">|</span>
+              <span>ARCTIC LATITUDE: <strong className="text-tertiary">78°55′N</strong></span>
+              <span className="text-outline-variant">|</span>
+              <span className="text-primary font-semibold">SYNAPSE NOMINAL</span>
+            </div>
+          </div>
 
-            {/* Subheadline */}
-            <p className="text-base sm:text-lg text-on-surface-variant font-['Inter'] leading-relaxed max-w-2xl">
-              Unified telemetry, open cryospheric data, and active expedition archives from Maitri, Bharati, Himadri, and Himansh across Antarctica, the Arctic, the Southern Ocean, and the Himalaya.
-            </p>
+          {/* Monumental Headline Block & Radar Graphic */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center my-auto py-12">
+            <div className="lg:col-span-8 space-y-6">
+              <div className="inline-flex items-center gap-2 text-xs font-mono text-primary">
+                <span className="material-symbols-outlined !text-base">explore</span>
+                <span className="tracking-widest uppercase">SOVEREIGN CRYOSPHERIC RESEARCH & OBSERVATION</span>
+              </div>
 
-            {/* Primary Action Buttons */}
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <a
-                href="#interactive-globe"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded bg-primary text-on-primary hover:bg-primary-fixed font-['Space_Grotesk'] text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-xl shadow-primary/20 hover:scale-[1.02] group"
-              >
-                <span>ENTER POLARSPHERE</span>
-                <span className="material-symbols-outlined !text-base transition-transform duration-200 group-hover:translate-x-1">
-                  arrow_forward
+              <h1 className="font-['Space_Grotesk'] text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-on-surface uppercase leading-[1.05] drop-shadow-2xl">
+                The Polar World,<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-fixed to-secondary">
+                  Through India’s Eyes.
                 </span>
-              </a>
+              </h1>
 
-              <button
-                onClick={() => onNavigate('stations')}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded bg-surface-container-high hover:bg-surface-bright text-on-surface border border-outline-variant/40 font-['Space_Grotesk'] text-xs font-bold uppercase tracking-wider transition-all"
-              >
-                <span className="material-symbols-outlined !text-base text-primary">domain</span>
-                <span>STATION TELEMETRY</span>
-              </button>
+              <p className="font-['Inter'] text-base sm:text-lg text-on-surface-variant max-w-2xl leading-relaxed">
+                India’s sovereign scientific deployment across Antarctica, the high Arctic, the Southern Ocean, and the Himalayan Third Pole through continuous cryogenic telemetry, autonomous observatories, and frontier deep-ice paleoclimate discoveries.
+              </p>
 
-              <button
-                onClick={() => onNavigate('expeditions')}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded bg-surface-container-high hover:bg-surface-bright text-on-surface border border-outline-variant/40 font-['Space_Grotesk'] text-xs font-bold uppercase tracking-wider transition-all"
-              >
-                <span className="material-symbols-outlined !text-base text-primary">directions_boat</span>
-                <span>EXPLORE EXPEDITIONS</span>
-              </button>
-
-              <button
-                onClick={() => onNavigate('architecture')}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded bg-primary/10 hover:bg-primary/20 text-primary border border-primary/40 font-['Space_Grotesk'] text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-md shadow-primary/10 hover:border-primary"
-              >
-                <span className="material-symbols-outlined !text-base text-primary animate-pulse">account_tree</span>
-                <span>SIH ARCHITECTURE FLOW</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Live Station Meteorological Capsule Strip */}
-          <div className="mt-12 pt-8 border-t border-outline-variant/30">
-            <div className="flex items-center justify-between mb-3 text-[11px] font-mono text-outline">
-              <span>LIVE POLAR OBSERVATION NETWORK // AUTO-REFRESH 60s</span>
-              <span className="text-primary font-semibold">ALL 4 OUTPOSTS ONLINE</span>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 font-mono">
-              {STATIONS.map((station) => (
-                <div
-                  key={station.id}
-                  onClick={() => onNavigate('stations', station.id)}
-                  className="p-3 sm:p-4 rounded-xl bg-surface-container-low/90 border border-outline-variant/30 hover:border-primary/50 transition-all cursor-pointer group"
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-4 pt-2">
+                <button
+                  onClick={() => onNavigate('stations')}
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-primary-container text-on-primary-container font-['Space_Grotesk'] text-xs font-bold uppercase tracking-wider hover:brightness-110 transition-all shadow-[0_0_24px_rgba(53,200,232,0.4)]"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-['Space_Grotesk'] font-bold text-on-surface group-hover:text-primary transition-colors">
-                      {station.shortName}
-                    </span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                  </div>
-                  <div className="text-xl sm:text-2xl font-bold text-primary mt-1">
-                    {station.liveWeather.temp}{station.liveWeather.tempUnit}
-                  </div>
-                  <div className="text-[11px] text-outline flex items-center justify-between mt-1">
-                    <span>{station.region}</span>
-                    <span>{station.liveWeather.windSpeed} kt</span>
-                  </div>
+                  <span>EXPLORE STATIONS</span>
+                  <span className="material-symbols-outlined !text-base">arrow_forward</span>
+                </button>
+
+                <button
+                  onClick={() => onNavigate('explore')}
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-surface-container-high/80 hover:bg-surface-container-highest text-tertiary-fixed font-['Space_Grotesk'] text-xs font-bold uppercase tracking-wider border border-outline-variant/30 backdrop-blur-md transition-all shadow-sm"
+                >
+                  <span className="material-symbols-outlined !text-base text-primary">sensors</span>
+                  <span>LIVE MISSION CONTROL</span>
+                </button>
+
+                <button
+                  onClick={() => onNavigate('expeditions')}
+                  className="inline-flex items-center gap-2 px-5 py-3.5 rounded-md bg-surface-container-low hover:bg-surface-container text-on-surface font-['Space_Grotesk'] text-xs font-medium uppercase tracking-wider border border-outline-variant/20 transition-all"
+                >
+                  <span className="material-symbols-outlined !text-base text-secondary">directions_boat</span>
+                  <span>EXPEDITION DATA LOGISTICS</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Right Orbital Radar Projection Graphic */}
+            <div className="lg:col-span-4 hidden lg:flex items-center justify-center relative">
+              <div className="w-80 h-80 rounded-full border border-primary/20 p-4 relative flex items-center justify-center">
+                {/* Concentric rotating radar rings */}
+                <div className="absolute inset-0 rounded-full border border-primary/10 animate-spin [animation-duration:40s]" />
+                <div className="absolute inset-4 rounded-full border border-primary/30 border-dashed animate-spin [animation-duration:25s] [animation-direction:reverse]" />
+                <div className="absolute inset-12 rounded-full border border-tertiary/20" />
+                <div className="w-40 h-40 rounded-full bg-primary/5 flex items-center justify-center relative">
+                  <div className="w-3 h-3 rounded-full bg-primary animate-ping" />
+                  <div className="w-2 h-2 rounded-full bg-primary shadow-[0_0_12px_#35c8e8]" />
                 </div>
-              ))}
+                {/* Radar sweeping line */}
+                <div className="absolute inset-0 rounded-full animate-spin [animation-duration:6s] pointer-events-none">
+                  <div className="w-1/2 h-0.5 bg-gradient-to-r from-transparent to-primary absolute top-1/2 left-1/2 origin-left" />
+                </div>
+                {/* Lat/Long tags */}
+                <span className="absolute top-2 left-1/2 -translate-x-1/2 text-[9px] font-mono text-primary/70">78°55′N HIMADRI</span>
+                <span className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[9px] font-mono text-primary/70">70°45′S MAITRI</span>
+                <span className="absolute right-0 top-1/2 -translate-y-1/2 text-[9px] font-mono text-tertiary/70">69°24′S BHARATI</span>
+                <span className="absolute left-0 top-1/2 -translate-y-1/2 text-[9px] font-mono text-secondary/70">32°24′N HIMANSH</span>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Section 1: Interactive Polar Geosphere */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-6 space-y-1">
-          <div className="text-xs font-mono text-primary uppercase tracking-widest font-semibold">
-            TERRESTRIAL TELEMETRY & SPATIAL HUBS
-          </div>
-          <h2 className="font-['Space_Grotesk'] text-2xl sm:text-3xl font-bold text-on-surface tracking-tight uppercase">
-            Interactive Polar Geosphere
-          </h2>
-          <p className="text-sm text-on-surface-variant font-['Inter']">
-            Explore India's research outposts in Antarctica, Svalbard, and the Himalaya with real-time multi-angle planetary projections.
-          </p>
-        </div>
-
-        <InteractiveGeosphere onSelectStation={(stationId) => onNavigate('stations', stationId)} />
-      </section>
-
-      {/* Section 2: India's Four High-Latitude Bastions */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
-          <div>
-            <span className="text-xs font-mono text-primary uppercase tracking-widest font-semibold">
-              YEAR-ROUND SCIENTIFIC PRESENCE
-            </span>
-            <h2 className="font-['Space_Grotesk'] text-2xl sm:text-3xl font-bold text-on-surface tracking-tight uppercase mt-1">
-              India’s Four High-Latitude Bastions
-            </h2>
-            <p className="text-sm text-on-surface-variant font-['Inter'] max-w-2xl mt-1">
-              From the sea-ice frontiers of Antarctica to the High Arctic and alpine Himalayan glaciers, discover our permanent observatories.
-            </p>
-          </div>
-
-          <button
-            onClick={() => onNavigate('stations')}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded bg-surface-container-high hover:bg-surface-bright text-xs font-['Space_Grotesk'] font-bold text-primary border border-outline-variant/30 tracking-wider"
-          >
-            <span>VIEW ALL STATION TELEMETRY</span>
-            <span className="material-symbols-outlined !text-base">arrow_forward</span>
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {STATIONS.map((station) => (
-            <div
-              key={station.id}
-              onClick={() => onNavigate('stations', station.id)}
-              className="rounded-2xl bg-surface-container-low border border-outline-variant/30 overflow-hidden hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 flex flex-col justify-between cursor-pointer group"
+          {/* 4 Domains Quick-Strip */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-8 pb-2 border-t border-outline-variant/20">
+            <div 
+              onClick={() => onNavigate('stations', 'maitri')}
+              className="p-3 sm:p-4 rounded-lg bg-surface-container-high/60 backdrop-blur-md flex flex-col gap-1 transition-all hover:-translate-y-1 cursor-pointer border border-outline-variant/20 hover:border-primary/40 group"
             >
-              {/* Station Image */}
-              <div className="relative h-48 w-full overflow-hidden bg-surface-container">
-                <img
-                  src={station.image}
-                  alt={station.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent"></div>
-                <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-surface-container-lowest/80 backdrop-blur-md text-[10px] font-mono text-primary border border-outline-variant/40">
-                  {station.region}
-                </div>
-                <div className="absolute bottom-3 left-3 text-xs font-mono text-on-surface font-semibold">
-                  EST. {station.establishedYear} • {station.altitude}
-                </div>
+              <div className="flex items-center justify-between text-xs font-mono">
+                <span className="text-primary font-semibold group-hover:text-primary-fixed">ANTARCTICA</span>
+                <span className="text-tertiary-fixed-dim">70°45′S</span>
               </div>
-
-              {/* Station Card Content */}
-              <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-                <div className="space-y-2">
-                  <h3 className="font-['Space_Grotesk'] text-lg font-bold text-on-surface group-hover:text-primary transition-colors leading-tight">
-                    {station.name}
-                  </h3>
-                  <p className="text-xs font-mono text-outline">
-                    {station.coordinates}
-                  </p>
-                  <p className="text-xs text-on-surface-variant font-['Inter'] line-clamp-3 leading-relaxed">
-                    {station.description}
-                  </p>
-                </div>
-
-                {/* Card Footer Live Stats */}
-                <div className="pt-3 border-t border-outline-variant/20 flex items-center justify-between text-xs font-mono">
-                  <div>
-                    <span className="text-outline text-[10px] block">AMBIENT TEMP</span>
-                    <span className="text-primary font-bold text-sm">
-                      {station.liveWeather.temp}{station.liveWeather.tempUnit}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-outline text-[10px] block">WINTER CREW</span>
-                    <span className="text-on-surface font-semibold text-sm">
-                      {station.personnel.winter} Scientists
-                    </span>
-                  </div>
-                </div>
-              </div>
+              <span className="font-['Space_Grotesk'] text-sm sm:text-base font-bold text-on-surface">Maitri & Bharati</span>
+              <span className="text-xs font-mono text-on-surface-variant">Continuous year-round base</span>
             </div>
-          ))}
+
+            <div 
+              onClick={() => onNavigate('stations', 'himadri')}
+              className="p-3 sm:p-4 rounded-lg bg-surface-container-high/60 backdrop-blur-md flex flex-col gap-1 transition-all hover:-translate-y-1 cursor-pointer border border-outline-variant/20 hover:border-primary/40 group"
+            >
+              <div className="flex items-center justify-between text-xs font-mono">
+                <span className="text-primary font-semibold group-hover:text-primary-fixed">ARCTIC</span>
+                <span className="text-tertiary-fixed-dim">78°55′N</span>
+              </div>
+              <span className="font-['Space_Grotesk'] text-sm sm:text-base font-bold text-on-surface">Himadri</span>
+              <span className="text-xs font-mono text-on-surface-variant">Svalbard Fjord Lab</span>
+            </div>
+
+            <div 
+              onClick={() => onNavigate('expeditions')}
+              className="p-3 sm:p-4 rounded-lg bg-surface-container-high/60 backdrop-blur-md flex flex-col gap-1 transition-all hover:-translate-y-1 cursor-pointer border border-outline-variant/20 hover:border-primary/40 group"
+            >
+              <div className="flex items-center justify-between text-xs font-mono">
+                <span className="text-primary font-semibold group-hover:text-primary-fixed">SOUTHERN OCEAN</span>
+                <span className="text-tertiary-fixed-dim">TRANSIT</span>
+              </div>
+              <span className="font-['Space_Grotesk'] text-sm sm:text-base font-bold text-on-surface">ORV Sagar Nidhi</span>
+              <span className="text-xs font-mono text-on-surface-variant">Deep-sea hydrodynamic vessel</span>
+            </div>
+
+            <div 
+              onClick={() => onNavigate('stations', 'himansh')}
+              className="p-3 sm:p-4 rounded-lg bg-surface-container-high/60 backdrop-blur-md flex flex-col gap-1 transition-all hover:-translate-y-1 cursor-pointer border border-outline-variant/20 hover:border-primary/40 group"
+            >
+              <div className="flex items-center justify-between text-xs font-mono">
+                <span className="text-primary font-semibold group-hover:text-primary-fixed">HIMALAYA</span>
+                <span className="text-tertiary-fixed-dim">4,000m+</span>
+              </div>
+              <span className="font-['Space_Grotesk'] text-sm sm:text-base font-bold text-on-surface">Himansh</span>
+              <span className="text-xs font-mono text-on-surface-variant">Spiti Cryospheric Outpost</span>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Section 3: Live Polar Meteorological Conditions Sensor Matrix */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-2xl bg-surface-container-low border border-outline-variant/30 p-6 sm:p-8 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-outline-variant/30">
+      {/* ==============================================================
+          SECTION 2: THE FOUR CRYOSPHERIC JURISDICTIONS (Stitch Artboard 1)
+          ============================================================== */}
+      <section className="w-full px-4 sm:px-6 lg:px-12 py-16 bg-surface">
+        <div className="max-w-7xl mx-auto space-y-10">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-outline-variant/20 pb-4">
             <div>
-              <span className="text-xs font-mono text-primary uppercase tracking-widest font-semibold">
-                SURFACE SENSOR TELEMETRY
+              <span className="text-xs font-mono text-primary uppercase tracking-widest font-semibold block mb-1">
+                SOVEREIGN TERRITORIAL MANDATE // POLAR DIVISIONS
               </span>
-              <h2 className="font-['Space_Grotesk'] text-xl sm:text-2xl font-bold text-on-surface tracking-tight uppercase mt-0.5">
-                Live Polar Meteorological Conditions
+              <h2 className="font-['Space_Grotesk'] text-3xl sm:text-4xl font-bold text-on-surface uppercase tracking-tight">
+                The Four Cryospheric Jurisdictions
               </h2>
             </div>
-            <div className="flex items-center gap-2 text-xs font-mono text-outline">
-              <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-              <span>CALIBRATED IMD & NCPOR AUTOMATED WEATHER STATIONS (AWS)</span>
-            </div>
+            <p className="text-xs sm:text-sm text-on-surface-variant font-['Inter'] max-w-md">
+              Sustained multi-decadal scientific observation across the Southern Pole, Northern Pole, Circumpolar Ocean, and the Third Pole headwaters.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-mono text-xs">
-            {STATIONS.map((station) => (
-              <div key={station.id} className="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant/20 space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="font-['Space_Grotesk'] font-bold text-sm text-on-surface">{station.shortName}</span>
-                  <span className="text-[10px] text-primary font-medium">{station.region}</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {jurisdictions.map((j) => (
+              <div
+                key={j.id}
+                onClick={() => j.stationId ? onNavigate('stations', j.stationId) : onNavigate('expeditions')}
+                className="group rounded-xl bg-surface-container-low border border-outline-variant/30 overflow-hidden hover:border-primary/50 transition-all duration-300 flex flex-col justify-between shadow-xl cursor-pointer hover:-translate-y-1"
+              >
+                <div className="relative h-52 w-full overflow-hidden bg-surface-container">
+                  <img
+                    src={j.image}
+                    alt={j.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/20 to-transparent" />
+                  <span className="absolute top-3 left-3 px-2 py-0.5 rounded bg-surface-container-lowest/80 backdrop-blur-md text-[10px] font-mono text-primary uppercase font-medium">
+                    {j.badge}
+                  </span>
+                  <div className="absolute bottom-3 left-3 right-3">
+                    <span className="text-[10px] font-mono text-tertiary-fixed block">{j.coordinates}</span>
+                    <h3 className="font-['Space_Grotesk'] text-xl font-bold text-on-surface group-hover:text-primary transition-colors">
+                      {j.title}
+                    </h3>
+                  </div>
                 </div>
-                <div className="text-2xl font-bold text-primary">
-                  {station.liveWeather.temp}°C
-                </div>
-                <div className="space-y-1 text-[11px] text-on-surface-variant">
-                  <div className="flex justify-between">
-                    <span className="text-outline">Wind Velocity:</span>
-                    <span>{station.liveWeather.windSpeed} kt ({station.liveWeather.windDirection})</span>
+
+                <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
+                  <p className="text-xs text-on-surface-variant font-['Inter'] leading-relaxed line-clamp-3">
+                    {j.description}
+                  </p>
+
+                  <div className="grid grid-cols-3 gap-2 pt-3 border-t border-outline-variant/20 font-mono text-[10px]">
+                    {j.metrics.map((m, idx) => (
+                      <div key={idx} className="bg-surface-container p-1.5 rounded text-center">
+                        <span className="text-on-surface-variant block text-[9px] uppercase">{m.label}</span>
+                        <span className="text-on-surface font-semibold truncate block mt-0.5">{m.value}</span>
+                      </div>
+                    ))}
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-outline">Wind Chill:</span>
-                    <span>{station.liveWeather.windChill}°C</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-outline">Pressure:</span>
-                    <span>{station.liveWeather.pressure} hPa</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-outline">Solar Radiation:</span>
-                    <span>{station.liveWeather.solarRadiation}</span>
+
+                  <div className="flex items-center justify-between text-xs font-['Space_Grotesk'] font-bold text-primary pt-1">
+                    <span>EXPLORE DOMAIN</span>
+                    <span className="material-symbols-outlined !text-sm group-hover:translate-x-1 transition-transform">
+                      arrow_forward
+                    </span>
                   </div>
                 </div>
               </div>
@@ -259,181 +375,304 @@ export default function HomePage({ onNavigate, onOpenGuide }) {
         </div>
       </section>
 
-      {/* Section 4: Featured Active Field Expedition (ISEA-44) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
-          <div>
-            <span className="text-xs font-mono text-primary uppercase tracking-widest font-semibold">
-              FIELDWORK & MARITIME OPERATIONS
-            </span>
-            <h2 className="font-['Space_Grotesk'] text-2xl sm:text-3xl font-bold text-on-surface tracking-tight uppercase mt-1">
-              Active Field Expeditions
-            </h2>
-            <p className="text-sm text-on-surface-variant font-['Inter'] max-w-2xl mt-1">
-              Track vessel transits, scientific teams, and dispatch logs across ongoing Indian polar deployments.
-            </p>
+      {/* ==============================================================
+          SECTION 3: SOVEREIGN OPERATIONAL BASES (Artboard 1)
+          ============================================================== */}
+      <section className="w-full px-4 sm:px-6 lg:px-12 py-16 bg-surface-container-lowest">
+        <div className="max-w-7xl mx-auto space-y-10">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-outline-variant/20 pb-4">
+            <div>
+              <span className="text-xs font-mono text-primary uppercase tracking-widest font-semibold block mb-1">
+                PERMANENT HIGH-LATITUDE BASES
+              </span>
+              <h2 className="font-['Space_Grotesk'] text-3xl sm:text-4xl font-bold text-on-surface uppercase tracking-tight">
+                Sovereign Operational Bases
+              </h2>
+            </div>
+            <button
+              onClick={() => onNavigate('stations')}
+              className="inline-flex items-center gap-1.5 text-xs font-mono text-primary hover:underline font-semibold"
+            >
+              <span>VIEW DETAILED TELEMETRY HUD</span>
+              <span className="material-symbols-outlined !text-sm">open_in_new</span>
+            </button>
           </div>
 
-          <button
-            onClick={() => onNavigate('expeditions')}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded bg-surface-container-high hover:bg-surface-bright text-xs font-['Space_Grotesk'] font-bold text-primary border border-outline-variant/30 tracking-wider"
-          >
-            <span>MISSION CONTROL CENTER</span>
-            <span className="material-symbols-outlined !text-base">arrow_forward</span>
-          </button>
-        </div>
-
-        {/* Featured ISEA-44 Mission Banner */}
-        <div className="rounded-2xl bg-surface-container-low border border-outline-variant/40 overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-0">
-          <div className="lg:col-span-5 relative min-h-[260px] bg-surface-container">
-            <img
-              src={featuredExpedition.heroImage}
-              alt={featuredExpedition.name}
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-surface-container-low"></div>
-            <div className="absolute top-4 left-4 px-3 py-1 rounded bg-black/60 backdrop-blur-md text-xs font-mono text-emerald-400 border border-emerald-500/30 font-semibold">
-              {featuredExpedition.status}
-            </div>
-          </div>
-
-          <div className="lg:col-span-7 p-6 sm:p-8 flex flex-col justify-between space-y-6">
-            <div className="space-y-3">
-              <div className="text-xs font-mono text-outline uppercase tracking-wider">
-                FLAGSHIP SCIENTIFIC VOYAGE // 2025–2026
-              </div>
-              <h3 className="font-['Space_Grotesk'] text-xl sm:text-2xl font-bold text-on-surface leading-tight">
-                {featuredExpedition.name}
-              </h3>
-              <p className="text-xs sm:text-sm text-on-surface-variant font-['Inter'] leading-relaxed">
-                Aboard polar chartered vessel <span className="text-on-surface font-semibold">{featuredExpedition.vessel}</span> carrying 54 wintering scientists, glaciologists, and logistical personnel across the Roaring Forties to Prydz Bay.
-              </p>
-
-              {/* Waypoint Coordinates Pill Box */}
-              <div className="p-3.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 font-mono text-xs space-y-1.5">
-                <div className="flex items-center justify-between text-primary font-semibold">
-                  <span>CURRENT POSITION:</span>
-                  <span>{featuredExpedition.currentTelemetry.lat}, {featuredExpedition.currentTelemetry.lng}</span>
-                </div>
-                <div className="flex items-center justify-between text-outline text-[11px]">
-                  <span>TRANSIT SPEED: {featuredExpedition.currentTelemetry.speed}</span>
-                  <span>ICE COVER: {featuredExpedition.currentTelemetry.seaIceCover}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-outline-variant/30">
-              <div className="text-xs font-mono text-outline">
-                VOYAGE LEADER: <span className="text-on-surface font-semibold">{featuredExpedition.leader}</span>
-              </div>
-              <button
-                onClick={() => onNavigate('expeditions', featuredExpedition.id)}
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded bg-primary text-on-primary hover:bg-primary-fixed font-['Space_Grotesk'] text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-primary/20"
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {STATIONS.map((stn) => (
+              <div
+                key={stn.id}
+                onClick={() => onNavigate('stations', stn.id)}
+                className="group rounded-xl bg-surface-container-low border border-outline-variant/30 overflow-hidden hover:border-primary/50 transition-all duration-300 flex flex-col justify-between shadow-xl cursor-pointer hover:-translate-y-1"
               >
-                <span>LIVE MISSION CONTROL HUD</span>
-                <span className="material-symbols-outlined !text-base">arrow_forward</span>
+                <div className="relative h-48 w-full overflow-hidden bg-surface-container">
+                  <img
+                    src={stn.image}
+                    alt={stn.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/20 to-transparent" />
+                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
+                    <span className="px-2 py-0.5 rounded bg-surface-container-lowest/80 text-[10px] font-mono text-primary font-semibold">
+                      {stn.code}
+                    </span>
+                    <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[10px] font-mono font-semibold">
+                      {stn.statusBadge}
+                    </span>
+                  </div>
+                  <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
+                    <div>
+                      <span className="text-[10px] font-mono text-outline block">EST. {stn.establishedYear}</span>
+                      <h3 className="font-['Space_Grotesk'] text-lg font-bold text-on-surface group-hover:text-primary transition-colors">
+                        {stn.name}
+                      </h3>
+                    </div>
+                    <span className="text-xl font-bold font-mono text-primary">
+                      {stn.liveWeather.temp}°C
+                    </span>
+                  </div>
+                </div>
+
+                <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
+                  <p className="text-xs text-on-surface-variant font-['Inter'] leading-relaxed line-clamp-3">
+                    {stn.description}
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-2 pt-2 border-t border-outline-variant/20 font-mono text-[10px]">
+                    <div className="bg-surface-container p-2 rounded">
+                      <span className="text-on-surface-variant block">COORDINATES</span>
+                      <span className="text-on-surface font-semibold truncate block mt-0.5">{stn.coordinates}</span>
+                    </div>
+                    <div className="bg-surface-container p-2 rounded">
+                      <span className="text-on-surface-variant block">ELEVATION</span>
+                      <span className="text-on-surface font-semibold truncate block mt-0.5">{stn.altitude}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs font-mono text-primary pt-1">
+                    <span>INSPECT STATION HUD</span>
+                    <span className="material-symbols-outlined !text-sm">arrow_forward</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ==============================================================
+          SECTION 4: CURATED POLAR EXPEDITION LOG (Artboard 1)
+          ============================================================== */}
+      <section className="w-full px-4 sm:px-6 lg:px-12 py-16 bg-surface">
+        <div className="max-w-7xl mx-auto space-y-8">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-outline-variant/20 pb-4">
+            <div>
+              <span className="text-xs font-mono text-primary uppercase tracking-widest font-semibold block mb-1">
+                FIELD CAMPAIGN ARCHIVE & REAL-TIME MISSIONS
+              </span>
+              <h2 className="font-['Space_Grotesk'] text-3xl sm:text-4xl font-bold text-on-surface uppercase tracking-tight">
+                Curated Polar Expedition Log
+              </h2>
+            </div>
+            <button
+              onClick={() => onNavigate('expeditions')}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded bg-surface-container-high hover:bg-surface-bright text-xs font-mono text-primary border border-outline-variant/30"
+            >
+              <span>MISSION CONTROL (ISEA-44)</span>
+              <span className="material-symbols-outlined !text-sm">directions_boat</span>
+            </button>
+          </div>
+
+          <div className="rounded-xl bg-surface-container-low border border-outline-variant/30 overflow-hidden shadow-xl">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left font-mono text-xs">
+                <thead>
+                  <tr className="bg-surface-container text-on-surface-variant uppercase tracking-wider text-[11px] border-b border-outline-variant/30">
+                    <th className="py-3.5 px-4 font-semibold">Expedition</th>
+                    <th className="py-3.5 px-4 font-semibold">Operational Vessel / Base</th>
+                    <th className="py-3.5 px-4 font-semibold">Sector / Coordinates</th>
+                    <th className="py-3.5 px-4 font-semibold">Expedition Lead</th>
+                    <th className="py-3.5 px-4 font-semibold">Mission Status</th>
+                    <th className="py-3.5 px-4 font-semibold text-right">Telemetry</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-outline-variant/20">
+                  {expeditionLog.map((exp) => (
+                    <tr 
+                      key={exp.id}
+                      onClick={() => onNavigate('expeditions')}
+                      className="hover:bg-surface-container-high/60 transition-colors cursor-pointer group"
+                    >
+                      <td className="py-4 px-4 font-['Space_Grotesk'] font-bold text-on-surface group-hover:text-primary transition-colors">
+                        <div className="flex items-center gap-2">
+                          {exp.active && (
+                            <span className="w-2 h-2 rounded-full bg-primary animate-pulse shrink-0" />
+                          )}
+                          <span>{exp.name}</span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4 text-tertiary">
+                        {exp.vessel}
+                      </td>
+                      <td className="py-4 px-4 text-on-surface-variant">
+                        <span>{exp.region}</span>
+                        <span className="block text-[10px] text-outline">{exp.coordinates}</span>
+                      </td>
+                      <td className="py-4 px-4 text-on-surface">
+                        {exp.leader}
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className={`px-2.5 py-1 rounded text-[10px] font-semibold border ${exp.badgeColor} ${exp.statusColor}`}>
+                          {exp.status}
+                        </span>
+                      </td>
+                      <td className="py-4 px-4 text-right text-on-surface-variant font-mono text-[11px]">
+                        {exp.days}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="p-4 bg-surface-container flex flex-wrap items-center justify-between text-xs font-mono text-on-surface-variant border-t border-outline-variant/20">
+              <span>SHOWING 5 OF 44 ANNUAL EXPEDITIONS RECORDED (1981–2025)</span>
+              <button 
+                onClick={() => onNavigate('expeditions')}
+                className="text-primary hover:underline font-semibold"
+              >
+                OPEN COMPLETE HISTORICAL ARCHIVE →
               </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Section 5: Understand the Polar World (Science Pillars) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-          <span className="text-xs font-mono text-primary uppercase tracking-widest font-semibold">
-            GLOBAL SCIENCE CONVERGENCE
-          </span>
-          <h2 className="font-['Space_Grotesk'] text-2xl sm:text-3xl font-bold text-on-surface tracking-tight uppercase">
-            Understand the Polar World
-          </h2>
-          <p className="text-sm text-on-surface-variant font-['Inter']">
-            Discover the critical scientific domains investigated by Indian researchers across the cryosphere and oceans.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              title: 'Cryosphere & Sea Ice',
-              icon: 'ac_unit',
-              desc: 'Monitoring ice sheet thickness, calving rates, and high-altitude Himalayan glacier melt to safeguard downstream freshwater resources.',
-              metric: '69% Freshwater Stored'
-            },
-            {
-              title: 'Monsoon Teleconnections',
-              icon: 'air',
-              desc: 'Unraveling the deep atmospheric coupling between Arctic amplification, Antarctic sea-ice fluctuations, and Indian summer rainfall patterns.',
-              metric: 'Southern Annular Mode'
-            },
-            {
-              title: 'Ocean Acidification',
-              icon: 'water',
-              desc: 'Profiling Southern Ocean carbon sink capacity and aragonite under-saturation levels affecting calcifying marine organisms.',
-              metric: '40°S to 68°S Transects'
-            },
-            {
-              title: 'Paleoclimate Deep Cores',
-              icon: 'history_edu',
-              desc: 'Drilling ice and lake sediment cores to reconstruct greenhouse gas concentrations and solar variations over the last 100,000 years.',
-              metric: '800,000 yr Archives'
-            }
-          ].map((pillar, idx) => (
-            <div
-              key={idx}
-              className="p-6 rounded-2xl bg-surface-container-low border border-outline-variant/30 space-y-4 hover:border-primary/40 transition-colors"
-            >
-              <div className="w-10 h-10 rounded-xl bg-primary-container/20 border border-primary/30 flex items-center justify-center text-primary">
-                <span className="material-symbols-outlined !text-2xl">{pillar.icon}</span>
-              </div>
-              <div className="space-y-1">
-                <h3 className="font-['Space_Grotesk'] text-base font-bold text-on-surface">
-                  {pillar.title}
-                </h3>
-                <span className="text-[10px] font-mono text-primary font-semibold block uppercase">
-                  {pillar.metric}
-                </span>
-              </div>
-              <p className="text-xs text-on-surface-variant font-['Inter'] leading-relaxed">
-                {pillar.desc}
-              </p>
+      {/* ==============================================================
+          SECTION 5: RESEARCH ARTIFACT TO SCIENTIFIC OUTCOME (Artboard 1)
+          ============================================================== */}
+      <section className="w-full px-4 sm:px-6 lg:px-12 py-16 bg-surface-container-lowest">
+        <div className="max-w-7xl mx-auto space-y-10">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-outline-variant/20 pb-4">
+            <div>
+              <span className="text-xs font-mono text-primary uppercase tracking-widest font-semibold block mb-1">
+                NATIONAL IMPACT & VALUE CHAIN
+              </span>
+              <h2 className="font-['Space_Grotesk'] text-3xl sm:text-4xl font-bold text-on-surface uppercase tracking-tight">
+                Research Artifact to Scientific Outcome
+              </h2>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Section 6: Open Science Data & Telemetry Preview */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-2xl bg-gradient-to-r from-surface-container-low to-surface-container border border-outline-variant/40 p-6 sm:p-8 flex flex-col lg:flex-row items-center justify-between gap-6">
-          <div className="space-y-2 max-w-xl">
-            <span className="text-xs font-mono text-primary uppercase tracking-widest font-semibold">
-              NATIONAL POLAR DATA CENTER (NPDC)
-            </span>
-            <h3 className="font-['Space_Grotesk'] text-xl sm:text-2xl font-bold text-on-surface">
-              FAIR-Compliant Polar Data Explorer
-            </h3>
-            <p className="text-xs sm:text-sm text-on-surface-variant font-['Inter'] leading-relaxed">
-              Access calibrated time-series, LiDAR point clouds, sediment cores, and GNSS datasets with DOIs, metadata standards, and programmatic Python/cURL APIs.
+            <p className="text-xs sm:text-sm text-on-surface-variant font-['Inter'] max-w-md">
+              Translating harsh-environment field campaigns into open datasets, breakthrough papers, and indigenous patents.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 shrink-0">
-            <button
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Outcome 1: Open Science Datasets */}
+            <div 
               onClick={() => onNavigate('data')}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-primary text-on-primary hover:bg-primary-fixed font-['Space_Grotesk'] text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-primary/20"
+              className="p-6 rounded-xl bg-surface-container-low border border-outline-variant/30 hover:border-primary/50 transition-all shadow-xl space-y-4 flex flex-col justify-between cursor-pointer group hover:-translate-y-1"
             >
-              <span>EXPLORE DATASETS</span>
-              <span className="material-symbols-outlined !text-base">arrow_forward</span>
-            </button>
+              <div className="space-y-3">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+                  <span className="material-symbols-outlined !text-2xl">database</span>
+                </div>
+                <div className="flex items-baseline justify-between">
+                  <span className="text-3xl font-bold font-['Space_Grotesk'] text-on-surface">14,289</span>
+                  <span className="text-xs font-mono text-primary font-semibold">FAIR 4.2 COMPLIANT</span>
+                </div>
+                <h3 className="font-['Space_Grotesk'] text-lg font-bold text-on-surface group-hover:text-primary transition-colors">
+                  Open Science Datasets
+                </h3>
+                <p className="text-xs text-on-surface-variant font-['Inter'] leading-relaxed">
+                  Continuous GNSS, ice core isotopes, CTD profiles, and meteorological series accessible via open REST API v2.4 and DOI indexed NetCDF formats.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-outline-variant/20 flex items-center justify-between text-xs font-mono text-primary">
+                <span>QUERY REPOSITORY</span>
+                <span className="material-symbols-outlined !text-sm">arrow_forward</span>
+              </div>
+            </div>
+
+            {/* Outcome 2: Peer-Reviewed Publications */}
+            <div 
+              onClick={() => onNavigate('data')}
+              className="p-6 rounded-xl bg-surface-container-low border border-outline-variant/30 hover:border-secondary/50 transition-all shadow-xl space-y-4 flex flex-col justify-between cursor-pointer group hover:-translate-y-1"
+            >
+              <div className="space-y-3">
+                <div className="w-12 h-12 rounded-lg bg-secondary/10 border border-secondary/30 flex items-center justify-center text-secondary group-hover:scale-105 transition-transform">
+                  <span className="material-symbols-outlined !text-2xl">article</span>
+                </div>
+                <div className="flex items-baseline justify-between">
+                  <span className="text-3xl font-bold font-['Space_Grotesk'] text-on-surface">850+</span>
+                  <span className="text-xs font-mono text-secondary font-semibold">PEER-REVIEWED</span>
+                </div>
+                <h3 className="font-['Space_Grotesk'] text-lg font-bold text-on-surface group-hover:text-secondary transition-colors">
+                  High-Impact Publications
+                </h3>
+                <p className="text-xs text-on-surface-variant font-['Inter'] leading-relaxed">
+                  Groundbreaking discoveries published in Nature Geoscience, Journal of Glaciology, and JGR detailing Pleistocene ice cores and teleconnections.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-outline-variant/20 flex items-center justify-between text-xs font-mono text-secondary">
+                <span>VIEW CITATIONS</span>
+                <span className="material-symbols-outlined !text-sm">arrow_forward</span>
+              </div>
+            </div>
+
+            {/* Outcome 3: Indigenous Patents & Polar Tech */}
+            <div 
+              onClick={() => onNavigate('stations')}
+              className="p-6 rounded-xl bg-surface-container-low border border-outline-variant/30 hover:border-tertiary/50 transition-all shadow-xl space-y-4 flex flex-col justify-between cursor-pointer group hover:-translate-y-1"
+            >
+              <div className="space-y-3">
+                <div className="w-12 h-12 rounded-lg bg-tertiary/10 border border-tertiary/30 flex items-center justify-center text-tertiary group-hover:scale-105 transition-transform">
+                  <span className="material-symbols-outlined !text-2xl">precision_manufacturing</span>
+                </div>
+                <div className="flex items-baseline justify-between">
+                  <span className="text-3xl font-bold font-['Space_Grotesk'] text-on-surface">32</span>
+                  <span className="text-xs font-mono text-tertiary font-semibold">PATENTS & TECH</span>
+                </div>
+                <h3 className="font-['Space_Grotesk'] text-lg font-bold text-on-surface group-hover:text-tertiary transition-colors">
+                  Polar Engineering & Patents
+                </h3>
+                <p className="text-xs text-on-surface-variant font-['Inter'] leading-relaxed">
+                  Cold-climate thermal architecture, hot-water deep ice drilling rigs, sub-surface GPR arrays, and extremophile biotechnological enzymes.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-outline-variant/20 flex items-center justify-between text-xs font-mono text-tertiary">
+                <span>TECHNOLOGY TRANSFER</span>
+                <span className="material-symbols-outlined !text-sm">arrow_forward</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ==============================================================
+          SECTION 6: INTERACTIVE POLAR GEOSPHERE 3D COMPONENT
+          ============================================================== */}
+      <section className="w-full px-4 sm:px-6 lg:px-12 py-16 bg-surface">
+        <div className="max-w-7xl mx-auto space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-outline-variant/20 pb-4">
+            <div>
+              <span className="text-xs font-mono text-primary uppercase tracking-widest font-semibold block mb-1">
+                3D PLANETARY VISUALIZER
+              </span>
+              <h2 className="font-['Space_Grotesk'] text-3xl font-bold text-on-surface uppercase tracking-tight">
+                Interactive Polar Geosphere
+              </h2>
+            </div>
             <button
-              onClick={onOpenGuide}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded bg-surface-container-high hover:bg-surface-bright text-xs font-['Space_Grotesk'] font-bold text-primary border border-outline-variant/30 tracking-wider"
+              onClick={() => onNavigate('explore')}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded bg-primary-container text-on-primary-container text-xs font-mono font-bold"
             >
-              <span className="material-symbols-outlined !text-base text-primary">smart_toy</span>
-              <span>ASK POLAR GUIDE</span>
+              <span>OPEN FULL-SCREEN HUD</span>
+              <span className="material-symbols-outlined !text-sm">fullscreen</span>
             </button>
           </div>
+
+          <InteractiveGeosphere onSelectStation={(stId) => onNavigate('stations', stId)} />
         </div>
       </section>
     </div>

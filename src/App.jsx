@@ -6,6 +6,7 @@ import StationsPage from './pages/StationsPage';
 import ExpeditionsPage from './pages/ExpeditionsPage';
 import DataExplorerPage from './pages/DataExplorerPage';
 import GeosphereMonitorPage from './pages/GeosphereMonitorPage';
+import ArchitectureFlowchartPage from './pages/ArchitectureFlowchartPage';
 import GlobalSearchModal from './components/GlobalSearchModal';
 import PolarGuideDrawer from './components/PolarGuideDrawer';
 
@@ -79,6 +80,10 @@ export default function App() {
 
         {activeTab === 'data' && (
           <DataExplorerPage />
+        )}
+
+        {activeTab === 'architecture' && (
+          <ArchitectureFlowchartPage onNavigate={handleNavigate} />
         )}
       </main>
 

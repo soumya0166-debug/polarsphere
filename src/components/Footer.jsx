@@ -124,6 +124,24 @@ export default function Footer({ onNavigate }) {
                 </button>
               </li>
               <li>
+                <button onClick={() => onNavigate('architecture')} className="text-primary hover:text-primary-fixed transition-colors text-left flex items-center gap-1.5 font-medium">
+                  <span className="material-symbols-outlined !text-sm text-primary">account_tree</span>
+                  <span>SIH Solution Architecture</span>
+                  <span className="text-[9px] font-mono uppercase px-1 py-0.2 bg-primary/20 text-primary rounded border border-primary/40">NEW</span>
+                </button>
+              </li>
+              <li>
+                <a 
+                  href="/architecture_presentation.html" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-primary transition-colors text-left flex items-center gap-1.5 text-xs text-on-surface-variant"
+                >
+                  <span className="material-symbols-outlined !text-xs text-outline">slideshow</span>
+                  <span>16:9 Presentation Slide (Pitch Mode)</span>
+                </a>
+              </li>
+              <li>
                 <span className="text-outline text-xs block pt-1">
                   Compliance:
                 </span>

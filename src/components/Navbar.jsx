@@ -9,6 +9,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenSearch, onOpenGu
     { id: 'stations', label: 'STATIONS', icon: 'domain' },
     { id: 'expeditions', label: 'EXPEDITIONS', icon: 'directions_boat' },
     { id: 'data', label: 'DATA', icon: 'database' },
+    { id: 'architecture', label: 'SIH ARCHITECTURE', icon: 'account_tree', isFeatured: true },
   ];
 
   const handleNavClick = (id) => {
@@ -65,9 +66,14 @@ export default function Navbar({ activeTab, setActiveTab, onOpenSearch, onOpenGu
               className={`px-3 py-1.5 rounded text-xs font-['Space_Grotesk'] font-medium tracking-wider transition-all duration-150 flex items-center gap-1.5 ${
                 activeTab === item.id
                   ? 'bg-surface-container-high text-primary border border-primary/40 shadow-sm shadow-primary/20'
+                  : item.isFeatured
+                  ? 'text-primary/90 bg-primary/10 border border-primary/30 hover:bg-primary/20 hover:text-primary shadow-sm shadow-primary/10'
                   : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low'
               }`}
             >
+              {item.isFeatured && (
+                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+              )}
               {item.label}
             </button>
           ))}

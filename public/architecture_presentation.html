@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PolarSphere — Solution Architecture Flowchart | SIH Presentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #060c14;
+      --surface: #09141f;
+      --card-bg: #111c28;
+      --card-lowest: #0b131e;
+      --card-high: #1c2837;
+      --primary: #74e2ff;
+      --primary-dim: #35c8e8;
+      --accent-gold: #fbbf24;
+      --accent-green: #34d399;
+      --text: #d8e3f4;
+      --text-muted: #869397;
+      --border: rgba(134, 147, 151, 0.25);
+      --border-primary: rgba(116, 226, 255, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, sans-serif;
+      line-height: 1.4;
+      overflow-x: hidden;
+      padding: 24px;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(53, 200, 232, 0.08) 0%, transparent 60%),
+        linear-gradient(to right, rgba(116, 226, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(116, 226, 255, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 32px 32px, 32px 32px;
+    }
+
+    .slide-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Header */
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .header-left h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-top: 4px;
+    }
+
+    .badge-sih {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--primary);
+      background: rgba(116, 226, 255, 0.15);
+      border: 1px solid var(--border-primary);
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .btn-fs {
+      background: var(--card-high);
+      color: var(--primary);
+      border: 1px solid var(--border-primary);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-fs:hover {
+      background: var(--primary);
+      color: var(--bg);
+    }
+
+    /* Layer Panels */
+    .layer-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .layer-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .layer-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .layer-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .layer-caption {
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+
+    /* Grid cards */
+    .grid-7 {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .grid-8 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .subcard {
+      background: var(--card-lowest);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .subcard:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .subcard .icon {
+      color: var(--primary);
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+
+    .subcard .name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .subcard .desc {
+      font-size: 9.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Flow connector */
+    .connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: -10px 0;
+      position: relative;
+      z-index: 5;
+    }
+
+    .connector-line {
+      width: 2px;
+      height: 14px;
+      background: var(--primary);
+    }
+
+    .connector-pill {
+      background: var(--card-high);
+      border: 1px solid var(--border-primary);
+      color: var(--primary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      padding: 2px 10px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Centerpiece Knowledge Graph */
+    .knowledge-graph-box {
+      background: #09141f;
+      border: 2px solid var(--primary-dim);
+      box-shadow: 0 0 30px rgba(53, 200, 232, 0.15);
+    }
+
+    .golden-link-strip {
+      background: var(--card-lowest);
+      border: 1px solid rgba(116, 226, 255, 0.3);
+      border-radius: 8px;
+      padding: 8px 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    .golden-pill {
+      background: rgba(116, 226, 255, 0.2);
+      color: var(--primary);
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .graph-nodes-row {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+    }
+
+    .graph-node {
+      background: var(--card-bg);
+      border: 1px solid var(--border-primary);
+      border-radius: 10px;
+      padding: 12px 8px;
+      text-align: center;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    }
+
+    .graph-node .node-icon-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(116, 226, 255, 0.15);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 6px;
+      border: 1px solid var(--primary);
+    }
+
+    /* Dual Fork connector */
+    .fork-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: -6px 0;
+    }
+
+    .fork-bar {
+      width: 50%;
+      height: 2px;
+      background: var(--primary);
+      position: relative;
+    }
+
+    /* PolarSphere Platform Block */
+    .polarsphere-dominant {
+      background: linear-gradient(180deg, #122132 0%, #09141f 100%);
+      border: 2px solid var(--primary);
+      box-shadow: 0 0 35px rgba(116, 226, 255, 0.2);
+      text-align: center;
+      padding: 22px 24px;
+    }
+
+    .polarsphere-dominant h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 0.08em;
+    }
+
+    .polarsphere-dominant .sub {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    /* Impact Strip */
+    .impact-strip {
+      background: linear-gradient(90deg, #09141f 0%, #162436 50%, #09141f 100%);
+      border: 1px solid var(--border-primary);
+      border-radius: 12px;
+      padding: 12px 18px;
+    }
+
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      text-align: center;
+    }
+
+    .impact-cell {
+      background: rgba(6, 12, 20, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+
+    .impact-cell .step {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .impact-cell .detail {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 900px) {
+      .grid-7 { grid-template-columns: repeat(3, 1fr); }
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .grid-8 { grid-template-columns: repeat(2, 1fr); }
+      .grid-2 { grid-template-columns: 1fr; }
+      .graph-nodes-row { grid-template-columns: repeat(3, 1fr); }
+      .impact-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="slide-container" id="slide">
+    <!-- Header -->
+    <div class="header-bar">
+      <div class="header-left">
+        <span class="badge-sih">Smart India Hackathon (SIH) Solution Architecture</span>
+        <h1>POLARSPHERE — “The Polar World, Through India’s Eyes”</h1>
+      </div>
+      <div>
+        <button class="btn-fs" onclick="toggleFullScreen()">
+          <span class="material-symbols-outlined" style="font-size: 16px;">fullscreen</span>
+          <span>PRESENTATION MODE</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- LAYER 1: EXISTING NCPOR DIGITAL ECOSYSTEM -->
+    <div class="layer-card">
+      <div class="layer-title-row">
+        <div class="layer-title" style="color: var(--accent-gold);">
+          <span class="material-symbols-outlined" style="font-size: 18px;">cloud_sync</span>
+          <span>1. EXISTING NCPOR DIGITAL ECOSYSTEM</span>
+        </div>
+        <span class="layer-tag" style="background: rgba(251, 191, 36, 0.15); color: var(--accent-gold); border: 1px solid rgba(251, 191, 36, 0.3);">
+          EXISTING DATA SILOS // VALUABLE BUT UNCONNECTED
+        </span>
+      </div>
+
+      <div class="grid-7">
+        <div class="subcard">
+          <span class="material-symbols-outlined icon">assignment</span>
+          <div class="name">Expedition Reports</div>
+          <div class="desc">44+ season logs</div>
+        </div>
+        <div class="subcard">
+          <span class="material-symbols-outlined icon">dataset</span>
+          <div class="name">Scientific Datasets</div>
+          <div class="desc">Met, GNSS, CTD, ice</div>
+        </div>
+        <div class="subcard">
+          <span class="material-symbols-outlined icon">menu_book</span>
+          <div class="name">Publications</div>
+          <div class="desc">Peer-reviewed papers</div>
+        </div>
+        <div class="subcard">
+          <span class="material-symbols-outlined icon">photo_camera</span>
+          <div class="name">Photographs</div>
+          <div class="desc">Station & flora archives</div>
+        </div>
+        <div class="subcard">
+          <span class="material-symbols-outlined icon">videocam</span>
+          <div class="name">Videos</div>
+          <div class="desc">Field footage & media</div>
+        </div>
+        <div class="subcard">
+          <span class="material-symbols-outlined icon">campaign</span>
+          <div class="name">News & Activities</div>
+          <div class="desc">Institutional briefs</div>
+        </div>
+        <div class="subcard">
+          <span class="material-symbols-outlined icon">school</span>
+          <div class="name">Outreach Resources</div>
+          <div class="desc">Brochures & webinars</div>
+        </div>
+      </div>
+
+      <div class="layer-caption">
+        <span style="color: var(--accent-gold); font-weight: 600;">“Valuable resources exist across multiple digital systems”</span>
+        — PolarSphere connects and enriches them rather than recreating.
+      </div>
+    </div>
+
+    <!-- CONNECTOR 1 -> 2 -->
+    <div class="connector">
+      <div class="connector-line"></div>
+      <div class="connector-pill">
+        <span>MULTI-MODAL INGESTION</span>
+        <span class="material-symbols-outlined" style="font-size: 11px;">arrow_downward</span>
+      </div>
+      <div class="connector-line"></div>
+    </div>
+
+    <!-- LAYER 2: UNIFIED KNOWLEDGE INGESTION -->
+    <div class="layer-card">
+      <div class="layer-title-row">
+        <div class="layer-title" style="color: var(--primary);">
+          <span class="material-symbols-outlined" style="font-size: 18px;">sync_alt</span>
+          <span>2. UNIFIED KNOWLEDGE INGESTION</span>
+        </div>
+        <span class="layer-tag" style="background: rgba(116, 226, 255, 0.15); color: var(--primary); border: 1px solid var(--border-primary);">
+          PROPOSED INTEGRATION PIPELINE
+        </span>
+      </div>
+
+      <div class="grid-4">
+        <div class="subcard" style="text-align: left;">
+          <div style="font-family: 'JetBrains Mono'; font-size: 9px; color: var(--primary);">STAGE 01</div>
+          <div class="name" style="font-size: 13px;">Metadata Extraction</div>
+          <div class="desc">Parses authors, dates, DOIs, GPS coordinates, station codes</div>
+        </div>
+        <div class="subcard" style="text-align: left;">
+          <div style="font-family: 'JetBrains Mono'; font-size: 9px; color: var(--primary);">STAGE 02</div>
+          <div class="name" style="font-size: 13px;">OCR / Video Transcription</div>
+          <div class="desc">Digitizes historical PDFs and transcribes field audio/videos</div>
+        </div>
+        <div class="subcard" style="text-align: left;">
+          <div style="font-family: 'JetBrains Mono'; font-size: 9px; color: var(--primary);">STAGE 03</div>
+          <div class="name" style="font-size: 13px;">AI Tagging & Classification</div>
+          <div class="desc">Domain ontology: Cryosphere, Climate, Ocean, Atmosphere</div>
+        </div>
+        <div class="subcard" style="text-align: left;">
+          <div style="font-family: 'JetBrains Mono'; font-size: 9px; color: var(--primary);">STAGE 04</div>
+          <div class="name" style="font-size: 13px;">Deduplication & Normalization</div>
+          <div class="desc">Resolves cross-system entity conflicts into JSON-LD standard</div>
+        </div>
+      </div>
+
+      <div class="layer-caption">
+        <span style="color: var(--primary); font-weight: 600;">“Convert distributed resources into structured, discoverable knowledge.”</span>
+      </div>
+    </div>
+
+    <!-- CONNECTOR 2 -> 3 -->
+    <div class="connector">
+      <div class="connector-line"></div>
+      <div class="connector-pill">
+        <span>GRAPH ONTOLOGY LINKAGE</span>
+        <span class="material-symbols-outlined" style="font-size: 11px;">arrow_downward</span>
+      </div>
+      <div class="connector-line"></div>
+    </div>
+
+    <!-- LAYER 3: POLAR KNOWLEDGE GRAPH (CENTERPIECE) -->
+    <div class="layer-card knowledge-graph-box">
+      <div class="layer-title-row">
+        <div class="layer-title" style="color: var(--primary); font-size: 16px;">
+          <span class="material-symbols-outlined" style="font-size: 22px;">hub</span>
+          <span>3. POLAR KNOWLEDGE GRAPH (VISUAL CENTERPIECE)</span>
+        </div>
+        <span class="layer-tag" style="background: rgba(116, 226, 255, 0.2); color: #fff; border: 1px solid var(--primary);">
+          SEMANTIC RELATIONSHIP MATRIX
+        </span>
+      </div>
+
+      <!-- Golden Link Highlight -->
+      <div class="golden-link-strip">
+        <span style="color: #fff; font-weight: bold;">KEY SCIENTIFIC RELATIONSHIP:</span>
+        <span class="golden-pill">Researcher</span>
+        <span style="color: var(--text-muted);">→</span>
+        <span class="golden-pill">Project</span>
+        <span style="color: var(--text-muted);">→</span>
+        <span class="golden-pill">Expedition</span>
+        <span style="color: var(--text-muted);">→</span>
+        <span class="golden-pill">Dataset</span>
+        <span style="color: var(--text-muted);">→</span>
+        <span class="golden-pill">Publication</span>
+        <span style="color: var(--text-muted);">↔</span>
+        <span class="golden-pill">Photo / Video</span>
+      </div>
+
+      <!-- Interconnected Nodes -->
+      <div class="graph-nodes-row">
+        <div class="graph-node">
+          <div class="node-icon-circle"><span class="material-symbols-outlined">person</span></div>
+          <div class="name">Researcher</div>
+          <div class="desc">Chief Scientist / Field PI</div>
+        </div>
+        <div class="graph-node">
+          <div class="node-icon-circle"><span class="material-symbols-outlined">folder_special</span></div>
+          <div class="name">Project</div>
+          <div class="desc">Cryospheric Research</div>
+        </div>
+        <div class="graph-node">
+          <div class="node-icon-circle"><span class="material-symbols-outlined">directions_boat</span></div>
+          <div class="name">Expedition</div>
+          <div class="desc">ISEA-44 / Himadri Arctic</div>
+        </div>
+        <div class="graph-node">
+          <div class="node-icon-circle"><span class="material-symbols-outlined">storage</span></div>
+          <div class="name">Dataset</div>
+          <div class="desc">GNSS, Ice Core, Met</div>
+        </div>
+        <div class="graph-node">
+          <div class="node-icon-circle"><span class="material-symbols-outlined">article</span></div>
+          <div class="name">Publication</div>
+          <div class="desc">Peer-Reviewed DOI</div>
+        </div>
+        <div class="graph-node">
+          <div class="node-icon-circle"><span class="material-symbols-outlined">perm_media</span></div>
+          <div class="name">Photo / Video</div>
+          <div class="desc">Field Dispatches</div>
+        </div>
+      </div>
+
+      <div class="layer-caption">
+        <span style="color: var(--primary); font-weight: 600;">“Connect previously distributed scientific relationships into one navigable knowledge ecosystem.”</span>
+      </div>
+    </div>
+
+    <!-- DUAL CONNECTOR 3 -> 4 -->
+    <div class="fork-container">
+      <div style="width: 2px; height: 12px; background: var(--primary);"></div>
+      <div class="fork-bar"></div>
+      <div style="display: flex; justify-content: space-between; width: 50%;">
+        <div style="width: 2px; height: 14px; background: var(--primary);"></div>
+        <div style="width: 2px; height: 14px; background: var(--primary);"></div>
+      </div>
+    </div>
+
+    <!-- LAYER 4: TWO INTELLIGENCE PATHS -->
+    <div class="grid-2">
+      <!-- LEFT BRANCH: AI KNOWLEDGE ENGINE -->
+      <div class="layer-card">
+        <div class="layer-title-row">
+          <div class="layer-title" style="color: var(--primary);">
+            <span class="material-symbols-outlined">smart_toy</span>
+            <span>4A. POLAR AI KNOWLEDGE ENGINE</span>
+          </div>
+          <span class="layer-tag" style="background: rgba(116, 226, 255, 0.1); color: var(--primary);">RAG DISCOVERY</span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 6px; font-family: 'JetBrains Mono'; font-size: 11px;">
+          <div style="background: var(--card-lowest); padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border);">
+            <strong style="color: var(--primary);">01. RAG-based Retrieval:</strong> Dense vector + BM25 index over graph nodes
+          </div>
+          <div style="background: var(--card-lowest); padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border);">
+            <strong style="color: var(--primary);">02. Natural-Language Search:</strong> Domain semantic intent mapping
+          </div>
+          <div style="background: var(--card-lowest); padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border);">
+            <strong style="color: var(--primary);">03. Ask Polar AI:</strong> Conversational answers grounded in DOI literature
+          </div>
+          <div style="background: var(--card-lowest); padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border);">
+            <strong style="color: var(--primary);">04. Synthesis:</strong> Multi-decadal cross-expedition recommendations
+          </div>
+        </div>
+
+        <!-- Query Bubble -->
+        <div style="margin-top: 10px; background: rgba(116, 226, 255, 0.08); border: 1px solid var(--border-primary); padding: 8px 12px; border-radius: 8px; font-size: 11px;">
+          <span style="font-family: 'JetBrains Mono'; font-size: 9px; color: var(--primary); font-weight: bold;">EXAMPLE QUERY BUBBLE:</span>
+          <div style="font-style: italic; color: #fff; margin: 2px 0;">“Show me India's Antarctic expeditions related to climate research.”</div>
+          <div style="font-size: 10px; color: var(--accent-green); font-family: 'JetBrains Mono';">✓ Retrieves connected nodes: ISEA-44 • Bharati Station • pCO₂ Datasets</div>
+        </div>
+      </div>
+
+      <!-- RIGHT BRANCH: DATA & VISUALIZATION ENGINE -->
+      <div class="layer-card">
+        <div class="layer-title-row">
+          <div class="layer-title" style="color: var(--primary);">
+            <span class="material-symbols-outlined">travel_explore</span>
+            <span>4B. POLAR DATA & VISUALIZATION ENGINE</span>
+          </div>
+          <span class="layer-tag" style="background: rgba(116, 226, 255, 0.1); color: var(--primary);">INTERACTIVE VIS</span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 6px; font-family: 'JetBrains Mono'; font-size: 11px;">
+          <div style="background: var(--card-lowest); padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border);">
+            <strong style="color: var(--primary);">01. Interactive Polar Globe:</strong> 3D South Polar, North Polar & Global projections
+          </div>
+          <div style="background: var(--card-lowest); padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border);">
+            <strong style="color: var(--primary);">02. Expedition & Station Maps:</strong> Live GPS tracks, waypoints & fast-ice lines
+          </div>
+          <div style="background: var(--card-lowest); padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border);">
+            <strong style="color: var(--primary);">03. Scientific Charts:</strong> Meteorological sparklines, barometer & solar flux
+          </div>
+          <div style="background: var(--card-lowest); padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border);">
+            <strong style="color: var(--primary);">04. Timelines & Media:</strong> Chronological voyage logs & high-res galleries
+          </div>
+        </div>
+
+        <div style="margin-top: 10px; background: rgba(52, 211, 153, 0.08); border: 1px solid rgba(52, 211, 153, 0.3); padding: 8px 12px; border-radius: 8px; font-size: 11px;">
+          <span style="font-family: 'JetBrains Mono'; font-size: 9px; color: var(--accent-green); font-weight: bold;">SCIENTIFIC DATA TRANSFORMATION:</span>
+          <div style="color: #fff; margin: 2px 0;">Complex NetCDF grids & LiDAR → Accessible interactive 3D exploration</div>
+          <div style="font-size: 10px; color: var(--primary); font-family: 'JetBrains Mono';">✓ Facilitates institutional outreach & scientific pair analysis</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONVERGENCE CONNECTOR 4 -> 5 -->
+    <div class="fork-container">
+      <div style="display: flex; justify-content: space-between; width: 50%;">
+        <div style="width: 2px; height: 12px; background: var(--primary);"></div>
+        <div style="width: 2px; height: 12px; background: var(--primary);"></div>
+      </div>
+      <div class="fork-bar"></div>
+      <div style="width: 2px; height: 14px; background: var(--primary);"></div>
+    </div>
+
+    <!-- LAYER 5: POLARSPHERE PLATFORM (DOMINANT CENTRAL BLOCK) -->
+    <div class="layer-card polarsphere-dominant">
+      <span class="badge-sih" style="margin-bottom: 6px;">UNIFIED DIGITAL EXPERIENCE</span>
+      <h2>POLARSPHERE</h2>
+      <div class="sub">Integrated Polar Knowledge, Discovery & Outreach Platform</div>
+
+      <div class="grid-8">
+        <div class="subcard" style="display: flex; align-items: center; gap: 8px; text-align: left;">
+          <span class="material-symbols-outlined icon" style="margin: 0;">travel_explore</span>
+          <div class="name">Explore Polar World</div>
+        </div>
+        <div class="subcard" style="display: flex; align-items: center; gap: 8px; text-align: left;">
+          <span class="material-symbols-outlined icon" style="margin: 0;">biotech</span>
+          <div class="name">Polar Science Explorer</div>
+        </div>
+        <div class="subcard" style="display: flex; align-items: center; gap: 8px; text-align: left;">
+          <span class="material-symbols-outlined icon" style="margin: 0;">dataset</span>
+          <div class="name">Polar Data Explorer</div>
+        </div>
+        <div class="subcard" style="display: flex; align-items: center; gap: 8px; text-align: left;">
+          <span class="material-symbols-outlined icon" style="margin: 0;">auto_stories</span>
+          <div class="name">Knowledge Hub</div>
+        </div>
+        <div class="subcard" style="display: flex; align-items: center; gap: 8px; text-align: left;">
+          <span class="material-symbols-outlined icon" style="margin: 0;">perm_media</span>
+          <div class="name">Polar Media</div>
+        </div>
+        <div class="subcard" style="display: flex; align-items: center; gap: 8px; text-align: left;">
+          <span class="material-symbols-outlined icon" style="margin: 0;">school</span>
+          <div class="name">Learning Lab</div>
+        </div>
+        <div class="subcard" style="display: flex; align-items: center; gap: 8px; text-align: left;">
+          <span class="material-symbols-outlined icon" style="margin: 0;">smart_toy</span>
+          <div class="name">Ask Polar AI</div>
+        </div>
+        <div class="subcard" style="display: flex; align-items: center; gap: 8px; text-align: left;">
+          <span class="material-symbols-outlined icon" style="margin: 0;">directions_boat</span>
+          <div class="name">Expedition Explorer</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONNECTOR 5 -> 6 -->
+    <div class="connector">
+      <div class="connector-line"></div>
+      <div class="connector-pill">
+        <span>TAILORED AUDIENCE PATHWAYS</span>
+        <span class="material-symbols-outlined" style="font-size: 11px;">arrow_downward</span>
+      </div>
+      <div class="connector-line"></div>
+    </div>
+
+    <!-- LAYER 6: USERS (4 AUDIENCE PATHWAYS) -->
+    <div class="grid-4">
+      <div class="subcard" style="text-align: left; padding: 14px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <span class="material-symbols-outlined" style="color: var(--primary); font-size: 22px;">science</span>
+          <span style="font-family: 'JetBrains Mono'; font-size: 9px; color: var(--text-muted);">PATHWAY 01</span>
+        </div>
+        <div class="name" style="font-size: 14px;">Researchers</div>
+        <div style="font-size: 11px; color: var(--primary); font-family: 'JetBrains Mono'; margin-bottom: 6px;">Scientific discovery</div>
+        <div class="desc" style="color: var(--text-muted); line-height: 1.5;">Datasets • Publications • Expeditions</div>
+      </div>
+
+      <div class="subcard" style="text-align: left; padding: 14px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <span class="material-symbols-outlined" style="color: var(--primary-dim); font-size: 22px;">school</span>
+          <span style="font-family: 'JetBrains Mono'; font-size: 9px; color: var(--text-muted);">PATHWAY 02</span>
+        </div>
+        <div class="name" style="font-size: 14px;">Students</div>
+        <div style="font-size: 11px; color: var(--primary-dim); font-family: 'JetBrains Mono'; margin-bottom: 6px;">Interactive learning</div>
+        <div class="desc" style="color: var(--text-muted); line-height: 1.5;">Lessons • Visualizations • Quizzes</div>
+      </div>
+
+      <div class="subcard" style="text-align: left; padding: 14px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <span class="material-symbols-outlined" style="color: #96ccff; font-size: 22px;">menu_book</span>
+          <span style="font-family: 'JetBrains Mono'; font-size: 9px; color: var(--text-muted);">PATHWAY 03</span>
+        </div>
+        <div class="name" style="font-size: 14px;">Teachers</div>
+        <div style="font-size: 11px; color: #96ccff; font-family: 'JetBrains Mono'; margin-bottom: 6px;">Educational resources</div>
+        <div class="desc" style="color: var(--text-muted); line-height: 1.5;">Verified science • Teaching material</div>
+      </div>
+
+      <div class="subcard" style="text-align: left; padding: 14px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <span class="material-symbols-outlined" style="color: #b0dbe5; font-size: 22px;">public</span>
+          <span style="font-family: 'JetBrains Mono'; font-size: 9px; color: var(--text-muted);">PATHWAY 04</span>
+        </div>
+        <div class="name" style="font-size: 14px;">Public</div>
+        <div style="font-size: 11px; color: #b0dbe5; font-family: 'JetBrains Mono'; margin-bottom: 6px;">Polar awareness</div>
+        <div class="desc" style="color: var(--text-muted); line-height: 1.5;">Stories • Media • Discoveries</div>
+      </div>
+    </div>
+
+    <!-- LAYER 7: FINAL IMPACT STRIP -->
+    <div class="impact-strip">
+      <div style="text-align: center; font-family: 'Space Grotesk'; font-size: 11px; font-weight: 700; color: var(--primary); letter-spacing: 0.08em; margin-bottom: 8px;">
+        FROM FRAGMENTED INFORMATION → CONNECTED POLAR KNOWLEDGE → INTELLIGENT DISCOVERY → SCIENCE OUTREACH
+      </div>
+      <div class="impact-grid">
+        <div class="impact-cell">
+          <div class="step" style="color: var(--accent-gold);">FRAGMENTED</div>
+          <div class="detail">Multiple siloed resources</div>
+        </div>
+        <div class="impact-cell">
+          <div class="step" style="color: var(--primary);">CONNECTED</div>
+          <div class="detail">Knowledge Graph linkages</div>
+        </div>
+        <div class="impact-cell">
+          <div class="step" style="color: var(--primary);">INTELLIGENT</div>
+          <div class="detail">RAG AI & semantic search</div>
+        </div>
+        <div class="impact-cell">
+          <div class="step" style="color: var(--accent-green);">ENGAGING</div>
+          <div class="detail">Visualization + Learning</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          alert(`Error attempting to enable full-screen mode: ${err.message}`);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+  </script>
+</body>
+</html>

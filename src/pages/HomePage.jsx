@@ -62,6 +62,14 @@ export default function HomePage({ onNavigate, onOpenGuide }) {
                 <span className="material-symbols-outlined !text-base text-primary">directions_boat</span>
                 <span>EXPLORE EXPEDITIONS</span>
               </button>
+
+              <button
+                onClick={() => onNavigate('architecture')}
+                className="inline-flex items-center gap-2 px-5 py-3 rounded bg-primary/10 hover:bg-primary/20 text-primary border border-primary/40 font-['Space_Grotesk'] text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-md shadow-primary/10 hover:border-primary"
+              >
+                <span className="material-symbols-outlined !text-base text-primary animate-pulse">account_tree</span>
+                <span>SIH ARCHITECTURE FLOW</span>
+              </button>
             </div>
           </div>
 

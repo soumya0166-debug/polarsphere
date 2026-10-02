@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { datasetsService } from '../services/api/datasetsService';
 import { POLAR_DATASETS, DATA_DOMAINS } from '../data/datasetsData';
+import { authService } from '../services/auth/authService';
 
-export default function DataExplorerPage() {
+export default function DataExplorerPage({ currentUser, onNavigate }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRegion, setSelectedRegion] = useState('all');
   const [selectedDomain, setSelectedDomain] = useState('all');
@@ -12,6 +13,7 @@ export default function DataExplorerPage() {
   const [lineageDataset, setLineageDataset] = useState(null);
   const [lineageData, setLineageData] = useState(null);
   const [isLoadingLineage, setIsLoadingLineage] = useState(false);
+  const [accessDeniedAlert, setAccessDeniedAlert] = useState(null);
 
   // Dynamic datasets from API service
   const [datasets, setDatasets] = useState([]);
@@ -25,9 +27,18 @@ export default function DataExplorerPage() {
 
     async function fetchDatasets() {
       try {
+        const domainMap = {
+          'Cryosphere': 'Cryosphere & Glaciology',
+          'Atmospheric Physics': 'Atmospheric Physics & Meteorology',
+          'Oceanography': 'Oceanography & Marine Biogeochemistry',
+          'Geoscience': 'Geology & Paleoclimate',
+          'Marine Geochemistry': 'Polar Biology & Ecology'
+        };
+        const queryDomain = selectedDomain === 'all' ? undefined : (domainMap[selectedDomain] || selectedDomain);
+
         const res = await datasetsService.getDatasets({
           region: selectedRegion === 'all' ? undefined : selectedRegion,
-          domain: selectedDomain === 'all' ? undefined : selectedDomain,
+          domain: queryDomain,
           search: searchQuery
         });
 
@@ -101,6 +112,20 @@ export default function DataExplorerPage() {
     } finally {
       setIsLoadingLineage(false);
     }
+  };
+
+  const handleDownloadClick = (ds) => {
+    const access = authService.isDatasetAccessible(currentUser, ds);
+    if (!access.allowed) {
+      setAccessDeniedAlert({
+        dataset: ds,
+        reason: access.reason,
+        code: access.code,
+        requiredClearance: ds.clearanceRequired || 'researcher'
+      });
+      return;
+    }
+    setDownloadModalDataset(ds);
   };
 
   return (
@@ -210,6 +235,12 @@ export default function DataExplorerPage() {
                   <span className="px-2.5 py-1 rounded bg-surface-container-high border border-outline-variant/30 text-[11px] font-mono text-outline">
                     VERSION: {ds.version}
                   </span>
+                  {ds.clearanceRequired && ds.clearanceRequired !== 'public' && (
+                    <span className="px-2.5 py-1 rounded bg-amber-500/15 border border-amber-500/30 text-[11px] font-mono text-amber-400 flex items-center gap-1 font-semibold">
+                      <span className="material-symbols-outlined !text-xs">lock</span>
+                      {ds.clearanceRequired.toUpperCase()} CLEARANCE
+                    </span>
+                  )}
                   {ds.provenance && (
                     <span className="px-2 py-0.5 rounded bg-surface-container text-[10px] font-mono text-outline border border-outline-variant/20">
                       SRC: {ds.provenance.sourceSystem}
@@ -290,7 +321,7 @@ export default function DataExplorerPage() {
                 </div>
 
                 <button
-                  onClick={() => setDownloadModalDataset(ds)}
+                  onClick={() => handleDownloadClick(ds)}
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-primary text-on-primary hover:bg-primary-fixed text-xs font-['Space_Grotesk'] font-bold tracking-wider uppercase transition-all shadow-md shadow-primary/20"
                 >
                   <span className="material-symbols-outlined !text-base">cloud_download</span>
@@ -537,6 +568,91 @@ print(nc_data)`}
               >
                 Close Lineage
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Access Denied / Clearance Required Modal */}
+      {accessDeniedAlert && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
+          <div 
+            className="w-full max-w-lg bg-surface-container-low rounded-2xl border border-amber-500/40 shadow-2xl p-6 sm:p-8 space-y-5"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between border-b border-outline-variant/30 pb-3">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center shrink-0">
+                  <span className="material-symbols-outlined !text-xl text-amber-400">shield_lock</span>
+                </div>
+                <div>
+                  <span className="text-[10px] font-mono text-amber-400 uppercase font-bold tracking-widest block">
+                    SCIENTIFIC CLEARANCE EMBARGO
+                  </span>
+                  <h3 className="font-['Space_Grotesk'] text-lg font-bold text-on-surface mt-0.5">
+                    Restricted Research Dataset
+                  </h3>
+                </div>
+              </div>
+              <button 
+                onClick={() => setAccessDeniedAlert(null)} 
+                className="text-outline hover:text-on-surface"
+              >
+                <span className="material-symbols-outlined !text-xl">close</span>
+              </button>
+            </div>
+
+            <div className="space-y-3 text-xs font-mono">
+              <div className="p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/20">
+                <span className="text-outline block text-[10px]">REQUESTED ARCHIVE:</span>
+                <span className="text-on-surface font-semibold text-xs">{accessDeniedAlert.dataset.title}</span>
+              </div>
+              <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-on-surface-variant font-['Inter'] text-xs leading-relaxed">
+                <span className="font-mono text-amber-400 font-semibold block mb-1">
+                  CLEARANCE POLICY REQUIREMENT:
+                </span>
+                {accessDeniedAlert.reason}
+              </div>
+              <div className="flex justify-between p-2 rounded bg-surface-container-lowest text-outline">
+                <span>REQUIRED CLEARANCE:</span>
+                <span className="text-amber-400 font-bold uppercase">{accessDeniedAlert.requiredClearance}</span>
+              </div>
+              <div className="flex justify-between p-2 rounded bg-surface-container-lowest text-outline">
+                <span>YOUR CURRENT CLEARANCE:</span>
+                <span className="text-primary font-bold uppercase">{currentUser ? (currentUser.clearance || 'RESEARCHER') : 'UNAUTHENTICATED (PUBLIC)'}</span>
+              </div>
+            </div>
+
+            <div className="pt-2 flex flex-col sm:flex-row justify-end gap-3">
+              <button
+                onClick={() => setAccessDeniedAlert(null)}
+                className="px-4 py-2 rounded bg-surface-container-high text-xs font-mono text-on-surface hover:bg-surface-bright"
+              >
+                Dismiss
+              </button>
+              {!currentUser ? (
+                <button
+                  onClick={() => {
+                    setAccessDeniedAlert(null);
+                    if (onNavigate) onNavigate('auth');
+                  }}
+                  className="px-5 py-2 rounded bg-primary text-on-primary text-xs font-['Space_Grotesk'] font-bold uppercase tracking-wider shadow-md shadow-primary/20 hover:bg-primary-fixed flex items-center justify-center gap-1.5"
+                >
+                  <span className="material-symbols-outlined !text-sm">lock_open</span>
+                  <span>Sign In / Register</span>
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    setAccessDeniedAlert(null);
+                    if (onNavigate) onNavigate('auth');
+                  }}
+                  className="px-5 py-2 rounded bg-amber-500 text-on-primary text-xs font-['Space_Grotesk'] font-bold uppercase tracking-wider shadow-md shadow-amber-500/20 hover:bg-amber-400 flex items-center justify-center gap-1.5"
+                >
+                  <span className="material-symbols-outlined !text-sm">badge</span>
+                  <span>View Dossier & Elevation</span>
+                </button>
+              )}
             </div>
           </div>
         </div>

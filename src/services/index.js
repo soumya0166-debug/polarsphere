@@ -21,3 +21,5 @@ export { knowledgeGraphService } from './api/knowledgeGraphService';
 export { IngestionPipeline, ingestionPipeline } from './ingestion/IngestionPipeline';
 export { ProvenanceTracker } from './ingestion/ProvenanceTracker';
 export { DeduplicationEngine } from './ingestion/deduplication';
+
+export { authService, CLEARANCE_LEVELS } from './auth/authService';

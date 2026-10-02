@@ -106,6 +106,7 @@ export const POLAR_DATASETS = [
     stationId: 'himansh',
     author: 'NCPOR Cryosphere Division & Himansh Research Observatory',
     license: 'Creative Commons Attribution-NonCommercial 4.0',
+    clearanceRequired: 'researcher',
     publishedDate: '18 Dec 2024',
     version: 'v2.0',
     formats: ['LAS/LAZ', 'GeoTIFF (1m DEM)', 'CSV'],
